@@ -7,13 +7,67 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7264CA211D3FC4AB00033FC4 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264CA201D3FC4AB00033FC4 /* FirstViewController.swift */; };
+		7264CA231D3FC4B300033FC4 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264CA221D3FC4B300033FC4 /* SecondViewController.swift */; };
+		7264CA251D3FC4B900033FC4 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264CA241D3FC4B900033FC4 /* ThirdViewController.swift */; };
+		7264CA261D3FC54A00033FC4 /* BoardingPass.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72BE8D661D3EC55E005720FB /* BoardingPass.framework */; };
+		7264CA271D3FC54A00033FC4 /* BoardingPass.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 72BE8D661D3EC55E005720FB /* BoardingPass.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		72BE8D6A1D3EC55E005720FB /* BoardingPass.h in Headers */ = {isa = PBXBuildFile; fileRef = 72BE8D691D3EC55E005720FB /* BoardingPass.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		72BE8D781D3FBC05005720FB /* BoardingPassTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BE8D771D3FBC05005720FB /* BoardingPassTests.swift */; };
+		72BE8D7A1D3FBC05005720FB /* BoardingPass.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72BE8D661D3EC55E005720FB /* BoardingPass.framework */; };
+		72BE8D871D3FBCDE005720FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BE8D861D3FBCDE005720FB /* AppDelegate.swift */; };
+		72BE8D891D3FBCDE005720FB /* OnboardingWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BE8D881D3FBCDE005720FB /* OnboardingWrapper.swift */; };
+		72BE8D8E1D3FBCDE005720FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72BE8D8D1D3FBCDE005720FB /* Assets.xcassets */; };
+		72BE8D911D3FBCDE005720FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72BE8D8F1D3FBCDE005720FB /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		7264CA281D3FC54A00033FC4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 72BE8D5D1D3EC55E005720FB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 72BE8D651D3EC55E005720FB;
+			remoteInfo = BoardingPass;
+		};
+		72BE8D7B1D3FBC05005720FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 72BE8D5D1D3EC55E005720FB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 72BE8D651D3EC55E005720FB;
+			remoteInfo = BoardingPass;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7264CA2A1D3FC54A00033FC4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7264CA271D3FC54A00033FC4 /* BoardingPass.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		7264CA201D3FC4AB00033FC4 /* FirstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		7264CA221D3FC4B300033FC4 /* SecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		7264CA241D3FC4B900033FC4 /* ThirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 		72BE8D661D3EC55E005720FB /* BoardingPass.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BoardingPass.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		72BE8D691D3EC55E005720FB /* BoardingPass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BoardingPass.h; sourceTree = "<group>"; };
 		72BE8D6B1D3EC55E005720FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		72BE8D751D3FBC05005720FB /* BoardingPassTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BoardingPassTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		72BE8D771D3FBC05005720FB /* BoardingPassTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardingPassTests.swift; sourceTree = "<group>"; };
+		72BE8D791D3FBC05005720FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		72BE8D841D3FBCDE005720FB /* BoardingPassExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoardingPassExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		72BE8D861D3FBCDE005720FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		72BE8D881D3FBCDE005720FB /* OnboardingWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWrapper.swift; sourceTree = "<group>"; };
+		72BE8D8D1D3FBCDE005720FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		72BE8D901D3FBCDE005720FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		72BE8D921D3FBCDE005720FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -24,6 +78,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		72BE8D721D3FBC05005720FB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				72BE8D7A1D3FBC05005720FB /* BoardingPass.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		72BE8D811D3FBCDE005720FB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7264CA261D3FC54A00033FC4 /* BoardingPass.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -31,6 +101,8 @@
 			isa = PBXGroup;
 			children = (
 				72BE8D681D3EC55E005720FB /* BoardingPass */,
+				72BE8D851D3FBCDE005720FB /* BoardingPassExample */,
+				72BE8D761D3FBC05005720FB /* BoardingPassTests */,
 				72BE8D671D3EC55E005720FB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -39,6 +111,8 @@
 			isa = PBXGroup;
 			children = (
 				72BE8D661D3EC55E005720FB /* BoardingPass.framework */,
+				72BE8D751D3FBC05005720FB /* BoardingPassTests.xctest */,
+				72BE8D841D3FBCDE005720FB /* BoardingPassExample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -46,10 +120,74 @@
 		72BE8D681D3EC55E005720FB /* BoardingPass */ = {
 			isa = PBXGroup;
 			children = (
+				72BE8D981D3FBD0C005720FB /* Assets */,
+			);
+			path = BoardingPass;
+			sourceTree = "<group>";
+		};
+		72BE8D761D3FBC05005720FB /* BoardingPassTests */ = {
+			isa = PBXGroup;
+			children = (
+				72BE8D971D3FBD00005720FB /* Assets */,
+				72BE8D771D3FBC05005720FB /* BoardingPassTests.swift */,
+			);
+			path = BoardingPassTests;
+			sourceTree = "<group>";
+		};
+		72BE8D851D3FBCDE005720FB /* BoardingPassExample */ = {
+			isa = PBXGroup;
+			children = (
+				72BE8D991D3FBD26005720FB /* App Delegate */,
+				72BE8D961D3FBCEC005720FB /* Assets */,
+				72BE8D9A1D3FBD2F005720FB /* Onboarding Demo */,
+			);
+			path = BoardingPassExample;
+			sourceTree = "<group>";
+		};
+		72BE8D961D3FBCEC005720FB /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				72BE8D8D1D3FBCDE005720FB /* Assets.xcassets */,
+				72BE8D921D3FBCDE005720FB /* Info.plist */,
+				72BE8D8F1D3FBCDE005720FB /* LaunchScreen.storyboard */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		72BE8D971D3FBD00005720FB /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				72BE8D791D3FBC05005720FB /* Info.plist */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		72BE8D981D3FBD0C005720FB /* Assets */ = {
+			isa = PBXGroup;
+			children = (
 				72BE8D691D3EC55E005720FB /* BoardingPass.h */,
 				72BE8D6B1D3EC55E005720FB /* Info.plist */,
 			);
-			path = BoardingPass;
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		72BE8D991D3FBD26005720FB /* App Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				72BE8D861D3FBCDE005720FB /* AppDelegate.swift */,
+			);
+			path = "App Delegate";
+			sourceTree = "<group>";
+		};
+		72BE8D9A1D3FBD2F005720FB /* Onboarding Demo */ = {
+			isa = PBXGroup;
+			children = (
+				7264CA201D3FC4AB00033FC4 /* FirstViewController.swift */,
+				72BE8D881D3FBCDE005720FB /* OnboardingWrapper.swift */,
+				7264CA221D3FC4B300033FC4 /* SecondViewController.swift */,
+				7264CA241D3FC4B900033FC4 /* ThirdViewController.swift */,
+			);
+			path = "Onboarding Demo";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -84,16 +222,62 @@
 			productReference = 72BE8D661D3EC55E005720FB /* BoardingPass.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		72BE8D741D3FBC05005720FB /* BoardingPassTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 72BE8D7F1D3FBC05005720FB /* Build configuration list for PBXNativeTarget "BoardingPassTests" */;
+			buildPhases = (
+				72BE8D711D3FBC05005720FB /* Sources */,
+				72BE8D721D3FBC05005720FB /* Frameworks */,
+				72BE8D731D3FBC05005720FB /* Resources */,
+				7264CA1C1D3FBFDA00033FC4 /* SwiftLint */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				72BE8D7C1D3FBC05005720FB /* PBXTargetDependency */,
+			);
+			name = BoardingPassTests;
+			productName = BoardingPassTests;
+			productReference = 72BE8D751D3FBC05005720FB /* BoardingPassTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		72BE8D831D3FBCDE005720FB /* BoardingPassExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 72BE8D931D3FBCDE005720FB /* Build configuration list for PBXNativeTarget "BoardingPassExample" */;
+			buildPhases = (
+				72BE8D801D3FBCDE005720FB /* Sources */,
+				72BE8D811D3FBCDE005720FB /* Frameworks */,
+				72BE8D821D3FBCDE005720FB /* Resources */,
+				7264CA1F1D3FC29700033FC4 /* SwiftLint */,
+				7264CA2A1D3FC54A00033FC4 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7264CA291D3FC54A00033FC4 /* PBXTargetDependency */,
+			);
+			name = BoardingPassExample;
+			productName = BoardingPassExample;
+			productReference = 72BE8D841D3FBCDE005720FB /* BoardingPassExample.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		72BE8D5D1D3EC55E005720FB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = Raizlabs;
 				TargetAttributes = {
 					72BE8D651D3EC55E005720FB = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					72BE8D741D3FBC05005720FB = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					72BE8D831D3FBCDE005720FB = {
 						CreatedOnToolsVersion = 7.3.1;
 					};
 				};
@@ -104,6 +288,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 72BE8D5C1D3EC55E005720FB;
 			productRefGroup = 72BE8D671D3EC55E005720FB /* Products */;
@@ -111,6 +296,8 @@
 			projectRoot = "";
 			targets = (
 				72BE8D651D3EC55E005720FB /* BoardingPass */,
+				72BE8D741D3FBC05005720FB /* BoardingPassTests */,
+				72BE8D831D3FBCDE005720FB /* BoardingPassExample */,
 			);
 		};
 /* End PBXProject section */
@@ -123,7 +310,54 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		72BE8D731D3FBC05005720FB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		72BE8D821D3FBCDE005720FB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				72BE8D911D3FBCDE005720FB /* LaunchScreen.storyboard in Resources */,
+				72BE8D8E1D3FBCDE005720FB /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7264CA1C1D3FBFDA00033FC4 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		7264CA1F1D3FC29700033FC4 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		72BE8D611D3EC55E005720FB /* Sources */ = {
@@ -133,7 +367,52 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		72BE8D711D3FBC05005720FB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				72BE8D781D3FBC05005720FB /* BoardingPassTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		72BE8D801D3FBCDE005720FB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7264CA231D3FC4B300033FC4 /* SecondViewController.swift in Sources */,
+				7264CA211D3FC4AB00033FC4 /* FirstViewController.swift in Sources */,
+				7264CA251D3FC4B900033FC4 /* ThirdViewController.swift in Sources */,
+				72BE8D891D3FBCDE005720FB /* OnboardingWrapper.swift in Sources */,
+				72BE8D871D3FBCDE005720FB /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7264CA291D3FC54A00033FC4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 72BE8D651D3EC55E005720FB /* BoardingPass */;
+			targetProxy = 7264CA281D3FC54A00033FC4 /* PBXContainerItemProxy */;
+		};
+		72BE8D7C1D3FBC05005720FB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 72BE8D651D3EC55E005720FB /* BoardingPass */;
+			targetProxy = 72BE8D7B1D3FBC05005720FB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		72BE8D8F1D3FBCDE005720FB /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				72BE8D901D3FBCDE005720FB /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			path = .;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		72BE8D6C1D3EC55E005720FB /* Debug */ = {
@@ -234,7 +513,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = BoardingPass/Info.plist;
+				INFOPLIST_FILE = BoardingPass/Assets/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.raizlabs.BoardingPass;
@@ -250,12 +529,54 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = BoardingPass/Info.plist;
+				INFOPLIST_FILE = BoardingPass/Assets/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.raizlabs.BoardingPass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		72BE8D7D1D3FBC05005720FB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = BoardingPassTests/Assets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.raizlabs.BoardingPassTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		72BE8D7E1D3FBC05005720FB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = BoardingPassTests/Assets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.raizlabs.BoardingPassTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		72BE8D941D3FBCDE005720FB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = BoardingPassExample/Assets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.raizlabs.BoardingPassExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		72BE8D951D3FBCDE005720FB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = BoardingPassExample/Assets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.raizlabs.BoardingPassExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -278,6 +599,25 @@
 				72BE8D701D3EC55E005720FB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		72BE8D7F1D3FBC05005720FB /* Build configuration list for PBXNativeTarget "BoardingPassTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				72BE8D7D1D3FBC05005720FB /* Debug */,
+				72BE8D7E1D3FBC05005720FB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		72BE8D931D3FBCDE005720FB /* Build configuration list for PBXNativeTarget "BoardingPassExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				72BE8D941D3FBCDE005720FB /* Debug */,
+				72BE8D951D3FBCDE005720FB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
