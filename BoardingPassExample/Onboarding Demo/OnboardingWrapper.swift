@@ -6,9 +6,43 @@
 //  Copyright © 2016 Raizlabs. All rights reserved.
 //
 
-import UIKit
+import BoardingPass
 
-class OnboardingWrapper: UINavigationController {
+protocol BackgroundColorProvider {
+    var backgroundColor: UIColor { get }
+}
+
+public extension UIViewControllerTransitionCoordinatorContext {
+    var toViewController: UIViewController? {
+        return viewControllerForKey(UITransitionContextToViewControllerKey)
+    }
+
+    var fromViewController: UIViewController? {
+        return viewControllerForKey(UITransitionContextFromViewControllerKey)
+    }
+}
+
+extension BackgroundColorProvider {
+    func animation(container: UIViewController?, animated: Bool) -> (() -> ()) {
+        let color = self.backgroundColor
+        return {
+            container?.view.backgroundColor = color
+        }
+    }
+
+    func completion(container: UIViewController?, animated: Bool) -> (() -> ()) {
+        return {}
+    }
+
+    func cancellation(context: UIViewControllerTransitionCoordinatorContext) {
+        guard let fromView = context.fromViewController as? BackgroundColorProvider else {
+            return
+        }
+        context.containerView().backgroundColor = fromView.backgroundColor
+    }
+}
+
+class OnboardingWrapper: BoardingNavigationController {
 
     static func sampleOnboarding() -> OnboardingWrapper {
         let onboarding = OnboardingWrapper.init(rootViewController: FirstViewController())

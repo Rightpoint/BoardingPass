@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         window?.rootViewController = OnboardingWrapper.sampleOnboarding()
         window?.makeKeyAndVisible()
+        window?.tintColor = UIColor.redColor()
         return true
     }
 
