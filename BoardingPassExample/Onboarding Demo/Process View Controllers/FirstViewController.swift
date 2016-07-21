@@ -12,6 +12,7 @@ import BoardingPass
 class ActionableViewController: UIViewController {
 
     override func viewDidLoad() {
+        navigationItem.backBarButtonItem = UIBarButtonItem.backButton
         navigationItem.rightBarButtonItem = UIBarButtonItem.skipButton
         navigationItem.rightBarButtonItem?.target = self
         navigationItem.rightBarButtonItem?.action = #selector(handleSkipTapped)
@@ -46,12 +47,11 @@ class FirstViewController: ActionableViewController, BoardingInformation {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = NSLocalizedString("First", comment: "First View controller title")
-        navigationItem.backBarButtonItem = UIBarButtonItem.backButton
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        perform(animation, completion: completion, cancelation: cancellation)
+        perform(animation, cancelation: cancellation)
     }
 
     var nextViewController: UIViewController? {
@@ -66,6 +66,17 @@ extension FirstViewController: BackgroundColorProvider {
         return .darkGrayColor()
     }
 
+    var currentProgress: NSProgress {
+        return NSProgress(completedUnitCount: 1, totalUnitCount: 4)
+    }
+
+}
+
+extension NSProgress {
+    convenience init(completedUnitCount: Int64, totalUnitCount: Int64) {
+        self.init(totalUnitCount: totalUnitCount)
+        self.completedUnitCount = completedUnitCount
+    }
 }
 
 extension UIButton {

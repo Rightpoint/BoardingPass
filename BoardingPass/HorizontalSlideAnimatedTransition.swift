@@ -50,12 +50,17 @@ extension HorizontalSlideAnimatedTransiton: UIViewControllerAnimatedTransitionin
             presented.view.transform = CGAffineTransformIdentity
         }
         let completion = { (completed: Bool) in
+            if completed {
+                presented.view.transform = CGAffineTransformIdentity
+            }
+            else {
+                presenting.view.transform = CGAffineTransformIdentity
+            }
             transitionContext.completeTransition(completed)
         }
-        UIView.animateWithDuration(transitionDuration(transitionContext), animations: animations, completion: completion)
-    }
-
-    public func animationEnded(transitionCompleted: Bool) {
+        UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0.0,
+                                   options: [.BeginFromCurrentState],
+                                   animations: animations, completion: completion)
     }
 
     public func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {

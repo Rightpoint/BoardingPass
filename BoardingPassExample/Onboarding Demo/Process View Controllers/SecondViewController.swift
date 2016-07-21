@@ -18,7 +18,7 @@ class SecondViewController: ActionableViewController {
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        perform(animation, completion: completion, cancelation: cancellation)
+        perform(animation, cancelation: cancellation)
     }
 
 
@@ -28,6 +28,10 @@ extension SecondViewController: BackgroundColorProvider {
 
     var backgroundColor: UIColor {
         return UIColor(white: 0.5, alpha: 1)
+    }
+
+    var currentProgress: NSProgress {
+        return NSProgress(completedUnitCount: 2, totalUnitCount: 4)
     }
 
 }

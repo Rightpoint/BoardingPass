@@ -20,26 +20,26 @@ public typealias AnimationFactory = (container: UIViewController?, animated: Boo
 public typealias ContextualAnimation = (context: UIViewControllerTransitionCoordinatorContext) -> ()
 
 public extension UIViewController {
-    public func perform(animation: AnimationFactory,
-                        completion: AnimationFactory,
-                        cancelation: ContextualAnimation) {
-        let animationInContext = { (context: UIViewControllerTransitionCoordinatorContext) in
-            animation(container: self.parentViewController, animated: context.isAnimated())()
+    public func perform(animation: AnimationFactory? = nil,
+                        completion: AnimationFactory? = nil,
+                        cancelation: ContextualAnimation? = nil) {
+        let animationInContext: ContextualAnimation = { (context: UIViewControllerTransitionCoordinatorContext) in
+            animation?(container: self.parentViewController, animated: context.isAnimated())()
         }
         let completionInContext = { (context: UIViewControllerTransitionCoordinatorContext) in
             if context.isCancelled() {
-                cancelation(context: context)
+                cancelation?(context: context)
             }
             else {
-                completion(container: self.parentViewController, animated: context.isAnimated())()
+                completion?(container: self.parentViewController, animated: context.isAnimated())()
             }
         }
         if let coordinator = transitionCoordinator() {
             coordinator.animateAlongsideTransitionInView(parentViewController?.view, animation: animationInContext, completion: completionInContext)
         }
         else {
-            animation(container: self.parentViewController, animated: false)()
-            completion(container: self.parentViewController, animated: false)()
+            animation?(container: self.parentViewController, animated: false)()
+            completion?(container: self.parentViewController, animated: false)()
         }
     }
 }

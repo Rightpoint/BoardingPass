@@ -10,6 +10,7 @@ import BoardingPass
 
 protocol BackgroundColorProvider {
     var backgroundColor: UIColor { get }
+    var currentProgress: NSProgress { get }
 }
 
 public extension UIViewControllerTransitionCoordinatorContext {
@@ -24,28 +25,33 @@ public extension UIViewControllerTransitionCoordinatorContext {
 
 extension BackgroundColorProvider {
     func animation(container: UIViewController?, animated: Bool) -> (() -> ()) {
-        let color = self.backgroundColor
+        let color = backgroundColor
+        let progress = currentProgress
         return {
+            (container as? OnboardingWrapper)?.progressBar.setProgress(Float(progress.fractionCompleted), animated: animated)
             container?.view.backgroundColor = color
         }
     }
 
-    func completion(container: UIViewController?, animated: Bool) -> (() -> ()) {
-        return {}
+    func cancellation(context: UIViewControllerTransitionCoordinatorContext) {
+//        guard let progressBar = ((self as? UIViewController)?.parentViewController as? OnboardingWrapper)?.progressBar else {
+//            return
+//        }
+//        print(progressBar.progress)
     }
 
-    func cancellation(context: UIViewControllerTransitionCoordinatorContext) {
-        guard let fromView = context.fromViewController as? BackgroundColorProvider else {
-            return
-        }
-        context.containerView().backgroundColor = fromView.backgroundColor
-    }
 }
 
 class OnboardingWrapper: BoardingNavigationController {
 
+    var progressBar = UIProgressView(progressViewStyle: .Bar)
+
     static func sampleOnboarding() -> OnboardingWrapper {
         let onboarding = OnboardingWrapper.init(rootViewController: FirstViewController())
+        onboarding.navigationBar.addSubview(onboarding.progressBar)
+        onboarding.progressBar.frame.size.width = onboarding.navigationBar.frame.width
+        onboarding.progressBar.frame.origin.x = onboarding.navigationBar.frame.origin.x
+        onboarding.progressBar.frame.origin.y = onboarding.navigationBar.frame.maxY - onboarding.progressBar.frame.height
         return onboarding
     }
 

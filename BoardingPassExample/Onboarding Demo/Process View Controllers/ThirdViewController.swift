@@ -18,7 +18,7 @@ class ThirdViewController: ActionableViewController {
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        perform(animation, completion: completion, cancelation: cancellation)
+        perform(animation, cancelation: cancellation)
     }
 
 
@@ -28,6 +28,10 @@ extension ThirdViewController: BackgroundColorProvider {
 
     var backgroundColor: UIColor {
         return .lightGrayColor()
+    }
+
+    var currentProgress: NSProgress {
+        return NSProgress(completedUnitCount: 3, totalUnitCount: 4)
     }
 
 }

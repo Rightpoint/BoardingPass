@@ -28,7 +28,7 @@ class CompletedViewController: UIViewController {
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        perform(animation, completion: completion, cancelation: cancellation)
+        perform(animation, cancelation: cancellation)
     }
 }
 
@@ -36,6 +36,10 @@ extension CompletedViewController: BackgroundColorProvider {
 
     var backgroundColor: UIColor {
         return .whiteColor()
+    }
+
+    var currentProgress: NSProgress {
+        return NSProgress(completedUnitCount: 4, totalUnitCount: 4)
     }
 
 }
