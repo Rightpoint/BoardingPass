@@ -69,7 +69,7 @@ public extension BoardingInformation {
         guard let viewController = self as? UIViewController else {
             return nil
         }
-        return viewController.navigationController?.previousViewController
+        return viewController.navigationController?.viewControllerBefore(viewController)
     }
 
     var allowGestures: Bool {
@@ -80,12 +80,11 @@ public extension BoardingInformation {
 
 private  extension UINavigationController {
 
-    var previousViewController: UIViewController? {
-        guard self.viewControllers.count >= 2 else {
+    func viewControllerBefore(viewController: UIViewController) -> UIViewController? {
+        guard let index = viewControllers.indexOf(viewController) where index > 0 else {
             return nil
         }
-        let secondToLastIndex = viewControllers.endIndex.predecessor().predecessor()
-        return viewControllers[secondToLastIndex]
+        return viewControllers[index.predecessor()]
     }
 
 }
