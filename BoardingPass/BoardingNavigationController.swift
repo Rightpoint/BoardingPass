@@ -8,36 +8,39 @@
 
 import UIKit
 
-public class BoardingNavigationController: UINavigationController {
-
-    struct TransitionState {
-        var direction: TransitionDirection = .None
-        var previousState: [UIViewController]?
-
-        init(direction: TransitionDirection, previousState: [UIViewController]) {
-            self.direction = direction
-            self.previousState = previousState
-        }
-
-        init() {
-            direction = .None
-            previousState = nil
-        }
-    }
-
-    enum TransitionDirection {
+private struct TransitionState {
+    private enum Direction {
         case Push
         case Pop
         case None
     }
 
+    var direction: Direction = .None
+    var previousState: [UIViewController]?
+
+    init(direction: Direction, previousState: [UIViewController]) {
+        self.direction = direction
+        self.previousState = previousState
+    }
+
+    init() {
+        direction = .None
+        previousState = nil
+    }
+}
+
+public class BoardingNavigationController: UINavigationController {
+
     private let panGestureRecognizer = UIPanGestureRecognizer()
     private var transitionState = TransitionState()
     private var interactionController: UIPercentDrivenInteractiveTransition?
 
-    var animatedTransitioningProvider: (UINavigationControllerOperation -> UIViewControllerAnimatedTransitioning)? = { navigationOperation in
-        return HorizontalSlideAnimatedTransiton(navigationOperation: navigationOperation)
-    }
+    /// An optional closure that takes a `UINavigationControllerOperation` and returns a
+    /// `UIViewControllerAnimatedTransitioning` object. Used to allow customization of the animation. The default value
+    /// is `HorizontalSlideAnimatedTransiton.init`. Setting this value to `nil` will default to the standard
+    /// navigation controller animation.
+    public var animatedTransitioningProvider: (UINavigationControllerOperation -> UIViewControllerAnimatedTransitioning)? = HorizontalSlideAnimatedTransiton.init
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
@@ -112,16 +115,23 @@ private extension BoardingNavigationController {
     func updateAnimation(forRecognizer recognizer: UIPanGestureRecognizer) {
         let xTranslation = recognizer.translationInView(view).x
         let percent = xTranslation / view.frame.width
-        if (percent < -0.001 && transitionState.direction == .Pop) ||
-            (percent > 0.001 && transitionState.direction == .Push) {
+        if (percent < 0 && transitionState.direction == .Pop) ||
+            (percent > 0 && transitionState.direction == .Push) {
             return
+        }
+        if (percent > 0.66 && transitionState.direction == .Pop) ||
+            (percent < -0.66 && transitionState.direction == .Push) {
+            recognizer.enabled = false
+            return
+        }
+        if interactionController == nil {
+            interactionController = UIPercentDrivenInteractiveTransition()
         }
         if transitionState.direction == .None && transitioningDelegate == nil {
             if xTranslation < 0 {
                 guard let pushableView = (topViewController as? BoardingInformation)?.nextViewController else {
                     return
                 }
-                interactionController = UIPercentDrivenInteractiveTransition()
                 transitionState = TransitionState(direction: .Push, previousState: viewControllers)
                 pushViewController(pushableView, animated: true)
             }
@@ -129,7 +139,6 @@ private extension BoardingNavigationController {
                 guard let poppableView = (topViewController as? BoardingInformation)?.previousViewController else {
                     return
                 }
-                interactionController = UIPercentDrivenInteractiveTransition()
                 transitionState = TransitionState(direction: .Pop, previousState: viewControllers)
                 popToArbitrary(poppableView, animated: true)
             }
@@ -138,6 +147,7 @@ private extension BoardingNavigationController {
     }
 
     func finishAnimation(forRecognizer recognizer: UIPanGestureRecognizer) {
+        recognizer.enabled = true
         let rawVelocity = recognizer.velocityInView(view).x
         let velocityPercentPerSecond: CGFloat
         switch transitionState.direction {
@@ -169,9 +179,6 @@ private extension BoardingNavigationController {
             self.transitionState = TransitionState()
         }
     }
-}
-
-private extension BoardingNavigationController {
 
     func configure(gestureRecognizer: UIGestureRecognizer, action: Selector) {
         gestureRecognizer.addTarget(self, action: action)

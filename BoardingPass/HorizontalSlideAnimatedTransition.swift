@@ -16,6 +16,11 @@ public class HorizontalSlideAnimatedTransiton: NSObject {
 
     private let slideType: TransitionType
 
+    /**
+     Initializes a HorizontalSlideAnimatedTransiton for handling a pan gesture on a UINavigationController
+
+     - parameter navigationOperation: The the navigation operation bieng animated
+     */
     public init(navigationOperation: UINavigationControllerOperation) {
         switch  navigationOperation {
         case .None, .Push:
