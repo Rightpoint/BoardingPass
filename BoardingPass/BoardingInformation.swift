@@ -35,9 +35,9 @@ public extension UIViewController {
      - parameter cancelation: A cancellation action to handle restoration of any state that isn't properly rolled back
                               if the animation block is cancelled
      */
-    public func perform(animation: AnimationFactory? = nil,
-                        completion: AnimationFactory? = nil,
-                        cancelation: ContextualAnimation? = nil) {
+    final public func performAlongsideCurrentCoordinator(animation: AnimationFactory? = nil,
+                                                         completion: AnimationFactory? = nil,
+                                                         cancelation: ContextualAnimation? = nil) {
         let parentController = self.parentViewController
         let animationInContext: ContextualAnimation = { (context: UIViewControllerTransitionCoordinatorContext) in
             animation?(container: parentController, animated: context.isAnimated())()

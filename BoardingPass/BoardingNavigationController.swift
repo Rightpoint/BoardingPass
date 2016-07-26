@@ -65,7 +65,7 @@ extension BoardingNavigationController: UINavigationControllerDelegate {
 
 // MARK: - Actions
 private extension BoardingNavigationController {
-    func popToArbitrary(viewController: UIViewController, animated: Bool) {
+    func popToAndInsertIfNeeded(viewController: UIViewController, animated: Bool) {
         if !viewControllers.contains(viewController) {
             if viewControllers.count > 1 {
                 viewControllers.insert(viewController,
@@ -76,26 +76,6 @@ private extension BoardingNavigationController {
             }
         }
         popToViewController(viewController, animated: animated)
-    }
-
-    @objc func handleSwipeRight(sender: UISwipeGestureRecognizer) {
-        guard sender.state == UIGestureRecognizerState.Ended else {
-            return
-        }
-        guard let previousViewController = (topViewController as? BoardingInformation)?.previousViewController else {
-            return
-        }
-        popToArbitrary(previousViewController, animated: true)
-    }
-
-    @objc func handleSwipeLeft(sender: UISwipeGestureRecognizer) {
-        guard sender.state == UIGestureRecognizerState.Ended else {
-            return
-        }
-        guard let nextViewController = (topViewController as? BoardingInformation)?.nextViewController else {
-            return
-        }
-        pushViewController(nextViewController, animated: true)
     }
 
     @objc func handlePan(sender: UIPanGestureRecognizer) {
@@ -127,6 +107,7 @@ private extension BoardingNavigationController {
         if interactionController == nil {
             interactionController = UIPercentDrivenInteractiveTransition()
         }
+        // The transitioning delegate being nil tells us that there isn't another active transition in play
         if transitionState.direction == .None && transitioningDelegate == nil {
             if xTranslation < 0 {
                 guard let pushableView = (topViewController as? BoardingInformation)?.nextViewController else {
@@ -140,7 +121,7 @@ private extension BoardingNavigationController {
                     return
                 }
                 transitionState = TransitionState(direction: .Pop, previousState: viewControllers)
-                popToArbitrary(poppableView, animated: true)
+                popToAndInsertIfNeeded(poppableView, animated: true)
             }
         }
         interactionController?.updateInteractiveTransition(abs(percent))

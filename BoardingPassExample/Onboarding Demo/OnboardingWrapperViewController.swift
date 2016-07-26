@@ -1,5 +1,5 @@
 //
-//  OnboardingWrapper.swift
+//  OnboardingWrapperViewController.swift
 //  BoardingPassExample
 //
 //  Created by Michael Skiba on 7/20/16.
@@ -28,26 +28,26 @@ extension BackgroundColorProvider {
         let color = backgroundColor
         let progress = currentProgress
         return {
-            (container as? OnboardingWrapper)?.progressBar.setProgress(Float(progress.fractionCompleted), animated: animated)
+            (container as? OnboardingWrapperViewController)?.progressBar.setProgress(Float(progress.fractionCompleted), animated: animated)
             container?.view.backgroundColor = color
         }
     }
 
     func cancellation(context: UIViewControllerTransitionCoordinatorContext) {
-//        guard let progressBar = ((self as? UIViewController)?.parentViewController as? OnboardingWrapper)?.progressBar else {
-//            return
-//        }
-//        print(progressBar.progress)
+        guard let progressBar = ((self as? UIViewController)?.parentViewController as? OnboardingWrapperViewController)?.progressBar else {
+            return
+        }
+        print(progressBar.progress)
     }
 
 }
 
-class OnboardingWrapper: BoardingNavigationController {
+class OnboardingWrapperViewController: BoardingNavigationController {
 
     var progressBar = UIProgressView(progressViewStyle: .Bar)
 
-    static func sampleOnboarding() -> OnboardingWrapper {
-        let onboarding = OnboardingWrapper.init(rootViewController: FirstViewController())
+    static func sampleOnboarding() -> OnboardingWrapperViewController {
+        let onboarding = OnboardingWrapperViewController.init(rootViewController: FirstViewController())
         onboarding.navigationBar.addSubview(onboarding.progressBar)
         onboarding.progressBar.frame.size.width = onboarding.navigationBar.frame.width
         onboarding.progressBar.frame.origin.x = onboarding.navigationBar.frame.origin.x

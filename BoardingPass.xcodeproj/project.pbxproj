@@ -20,7 +20,7 @@
 		72BE8D781D3FBC05005720FB /* BoardingPassTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BE8D771D3FBC05005720FB /* BoardingPassTests.swift */; };
 		72BE8D7A1D3FBC05005720FB /* BoardingPass.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72BE8D661D3EC55E005720FB /* BoardingPass.framework */; };
 		72BE8D871D3FBCDE005720FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BE8D861D3FBCDE005720FB /* AppDelegate.swift */; };
-		72BE8D891D3FBCDE005720FB /* OnboardingWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BE8D881D3FBCDE005720FB /* OnboardingWrapper.swift */; };
+		72BE8D891D3FBCDE005720FB /* OnboardingWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BE8D881D3FBCDE005720FB /* OnboardingWrapperViewController.swift */; };
 		72BE8D8E1D3FBCDE005720FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72BE8D8D1D3FBCDE005720FB /* Assets.xcassets */; };
 		72BE8D911D3FBCDE005720FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72BE8D8F1D3FBCDE005720FB /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -72,7 +72,7 @@
 		72BE8D791D3FBC05005720FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		72BE8D841D3FBCDE005720FB /* BoardingPassExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoardingPassExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72BE8D861D3FBCDE005720FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		72BE8D881D3FBCDE005720FB /* OnboardingWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWrapper.swift; sourceTree = "<group>"; };
+		72BE8D881D3FBCDE005720FB /* OnboardingWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWrapperViewController.swift; sourceTree = "<group>"; };
 		72BE8D8D1D3FBCDE005720FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		72BE8D901D3FBCDE005720FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		72BE8D921D3FBCDE005720FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -213,7 +213,7 @@
 			children = (
 				7264CA311D3FEC4000033FC4 /* Completed View Controller */,
 				7264CA301D3FEC2A00033FC4 /* Process View Controllers */,
-				72BE8D881D3FBCDE005720FB /* OnboardingWrapper.swift */,
+				72BE8D881D3FBCDE005720FB /* OnboardingWrapperViewController.swift */,
 			);
 			path = "Onboarding Demo";
 			sourceTree = "<group>";
@@ -414,7 +414,7 @@
 				7264CA231D3FC4B300033FC4 /* SecondViewController.swift in Sources */,
 				7264CA211D3FC4AB00033FC4 /* FirstViewController.swift in Sources */,
 				7264CA251D3FC4B900033FC4 /* ThirdViewController.swift in Sources */,
-				72BE8D891D3FBCDE005720FB /* OnboardingWrapper.swift in Sources */,
+				72BE8D891D3FBCDE005720FB /* OnboardingWrapperViewController.swift in Sources */,
 				72BE8D871D3FBCDE005720FB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
