@@ -54,17 +54,17 @@ class OnboardingWrapperViewController: BoardingNavigationController {
 
     static func sampleOnboarding() -> OnboardingWrapperViewController {
         let onboarding = OnboardingWrapperViewController(viewControllersToPresent: [FirstViewController(), SecondViewController(), ThirdViewController()])
-        onboarding.navigationBar.addSubview(onboarding.progressSlider)
-        onboarding.progressSlider.frame.size.height = 4
-        onboarding.progressSlider.frame.size.width = onboarding.navigationBar.frame.width
-        onboarding.progressSlider.frame.origin.x = onboarding.navigationBar.frame.origin.x
-        onboarding.progressSlider.frame.origin.y = onboarding.navigationBar.frame.maxY - onboarding.progressSlider.frame.height
-        onboarding.progressSlider.backgroundColor = .redColor()
         return onboarding
     }
 
-    override func loadView() {
-        super.loadView()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationBar.addSubview(progressSlider)
+        progressSlider.frame.size.height = 4
+        progressSlider.frame.size.width = navigationBar.frame.width
+        progressSlider.frame.origin.x = navigationBar.frame.origin.x
+        progressSlider.frame.origin.y = navigationBar.frame.maxY - progressSlider.frame.height
+        progressSlider.backgroundColor = .redColor()
         view.backgroundColor = UIColor.whiteColor()
     }
 
