@@ -27,31 +27,39 @@ extension BackgroundColorProvider {
     func animation(container: UIViewController?, animated: Bool) -> (() -> ()) {
         let color = backgroundColor
         let progress = currentProgress
+        let progressViewController = container as? OnboardingWrapperViewController
         return {
-            (container as? OnboardingWrapperViewController)?.progressBar.setProgress(Float(progress.fractionCompleted), animated: animated)
+            progressViewController?.progress = progress
             container?.view.backgroundColor = color
         }
-    }
-
-    func cancellation(context: UIViewControllerTransitionCoordinatorContext) {
-        guard let progressBar = ((self as? UIViewController)?.parentViewController as? OnboardingWrapperViewController)?.progressBar else {
-            return
-        }
-        print(progressBar.progress)
     }
 
 }
 
 class OnboardingWrapperViewController: BoardingNavigationController {
 
-    var progressBar = UIProgressView(progressViewStyle: .Bar)
+    // We're creating a non-standard progress slider because the UIProgressView
+    // has a visual glitch when the animation is cancelled, probably due to
+    // CALayer animations
+    private let progressSlider = UIView()
+    var progress = NSProgress() {
+        didSet {
+            let progressAmount = CGFloat(progress.fractionCompleted)
+            var newTransform = CGAffineTransformIdentity
+            newTransform = CGAffineTransformTranslate(newTransform, (-view.frame.width + (view.frame.width * progressAmount)) / 2, 0)
+            newTransform = CGAffineTransformScale(newTransform, progressAmount, 1)
+            progressSlider.transform = newTransform
+        }
+    }
 
     static func sampleOnboarding() -> OnboardingWrapperViewController {
         let onboarding = OnboardingWrapperViewController.init(rootViewController: FirstViewController())
-        onboarding.navigationBar.addSubview(onboarding.progressBar)
-        onboarding.progressBar.frame.size.width = onboarding.navigationBar.frame.width
-        onboarding.progressBar.frame.origin.x = onboarding.navigationBar.frame.origin.x
-        onboarding.progressBar.frame.origin.y = onboarding.navigationBar.frame.maxY - onboarding.progressBar.frame.height
+        onboarding.navigationBar.addSubview(onboarding.progressSlider)
+        onboarding.progressSlider.frame.size.height = 4
+        onboarding.progressSlider.frame.size.width = onboarding.navigationBar.frame.width
+        onboarding.progressSlider.frame.origin.x = onboarding.navigationBar.frame.origin.x
+        onboarding.progressSlider.frame.origin.y = onboarding.navigationBar.frame.maxY - onboarding.progressSlider.frame.height
+        onboarding.progressSlider.backgroundColor = .redColor()
         return onboarding
     }
 

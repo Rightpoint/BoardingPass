@@ -28,7 +28,7 @@ class CompletedViewController: UIViewController {
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        performAlongsideCurrentCoordinator(animation, cancelation: cancellation)
+        performAlongsideCurrentCoordinator(animation)
     }
 }
 

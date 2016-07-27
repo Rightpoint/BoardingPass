@@ -51,7 +51,7 @@ class FirstViewController: ActionableViewController, BoardingInformation {
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        performAlongsideCurrentCoordinator(animation, cancelation: cancellation)
+        performAlongsideCurrentCoordinator(animation)
     }
 
     var nextViewController: UIViewController? {
