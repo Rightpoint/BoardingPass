@@ -40,11 +40,11 @@ public class BoardingNavigationController: UINavigationController {
     /// controller conforms to `BoardingInformation`
     public var viewControllersToPresent: [UIViewController] = []
 
-    /** 
-     An optional closure that takes a `UINavigationControllerOperation` and returns a 
-     `UIViewControllerAnimatedTransitioning` object. Used to allow customization of 
-     the animation. The default value is `HorizontalSlideAnimatedTransiton.init`. 
-     Setting this value to `nil` will default to the standard navigation controller 
+    /**
+     An optional closure that takes a `UINavigationControllerOperation` and returns a
+     `UIViewControllerAnimatedTransitioning` object. Used to allow customization of
+     the animation. The default value is `HorizontalSlideAnimatedTransiton.init`.
+     Setting this value to `nil` will default to the standard navigation controller
      animation.
      */
     public var animatedTransitioningProvider: (UINavigationControllerOperation -> UIViewControllerAnimatedTransitioning)? = HorizontalSlideAnimatedTransiton.init
@@ -60,22 +60,23 @@ public class BoardingNavigationController: UINavigationController {
      view controllers to present. If the array is non-empty then it also sets
      the root view controller to the first element in the array.
 
-     - parameter viewControllersToPresent: The array of view controllers to use 
+     - parameter viewControllersToPresent: The array of view controllers to use
                  as default navigation options.
      */
     public convenience init(viewControllersToPresent: [UIViewController]) {
         if let firstViewController = viewControllersToPresent.first {
             self.init(rootViewController: firstViewController)
-        }else {
+        }
+        else {
             self.init()
         }
         self.viewControllersToPresent = viewControllersToPresent
     }
 
     /**
-     Pushes the next view controller in boarding pass stack if one exists. 
+     Pushes the next view controller in boarding pass stack if one exists.
 
-     - parameter animated: Specify true to animate the transition or false 
+     - parameter animated: Specify true to animate the transition or false
      if you do not want the transition to be animated.
      */
     public func pushToNextViewController(animated animated: Bool) {
