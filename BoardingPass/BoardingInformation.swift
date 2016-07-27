@@ -27,24 +27,24 @@ public extension UIViewController {
     /**
      A function for handling an animation that may or may not be performed alongside an animation context
 
-     - parameter animation: A closture that takes a view controller and an animated flag and returns an animation block
+     - parameter animation: A closure that takes a view controller and an animated flag and returns an animation block
                             to perform perform, either alongside a context if one exists, with a fallback of applying
                             it to the view
      - parameter completion: A closure that takes a view controller and an animated flag, and returns an animation block
                              to perform alongside a context, with a fallback of applying it to the view
-     - parameter cancelation: A cancellation action to handle restoration of any state that isn't properly rolled back
+     - parameter cancellation: A cancellation action to handle restoration of any state that isn't properly rolled back
                               if the animation block is cancelled
      */
-    final public func performAlongsideCurrentCoordinator(animation: AnimationFactory? = nil,
+    final public func performCoordinatedAnimations(animation: AnimationFactory? = nil,
                                                          completion: AnimationFactory? = nil,
-                                                         cancelation: ContextualAnimation? = nil) {
+                                                         cancellation: ContextualAnimation? = nil) {
         let parentController = self.parentViewController
         let animationInContext: ContextualAnimation = { (context: UIViewControllerTransitionCoordinatorContext) in
             animation?(container: parentController, animated: context.isAnimated())()
         }
         let completionInContext = { (context: UIViewControllerTransitionCoordinatorContext) in
             if context.isCancelled() {
-                cancelation?(context: context)
+                cancellation?(context: context)
             }
             else {
                 completion?(container: parentController, animated: context.isAnimated())()
