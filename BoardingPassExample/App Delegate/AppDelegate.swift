@@ -17,8 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
-        window?.rootViewController = OnboardingWrapper.sampleOnboarding()
+        window?.rootViewController = OnboardingWrapperViewController.sampleOnboarding()
         window?.makeKeyAndVisible()
+        window?.tintColor = UIColor.redColor()
         return true
     }
 
