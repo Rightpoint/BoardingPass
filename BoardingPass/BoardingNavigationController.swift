@@ -34,12 +34,19 @@ public class BoardingNavigationController: UINavigationController {
     private let panGestureRecognizer = UIPanGestureRecognizer()
     private var transitionState = TransitionState()
     private var interactionController: UIPercentDrivenInteractiveTransition?
+
+    /// An array of view controllers used to determine the next or previous view
+    /// controller to present in the series. These are ignored if the top view
+    /// controller conforms to `BoardingInformation`
     public var viewControllersToPresent: [UIViewController] = []
 
-    /// An optional closure that takes a `UINavigationControllerOperation` and returns a
-    /// `UIViewControllerAnimatedTransitioning` object. Used to allow customization of the animation. The default value
-    /// is `HorizontalSlideAnimatedTransiton.init`. Setting this value to `nil` will default to the standard
-    /// navigation controller animation.
+    /** 
+     An optional closure that takes a `UINavigationControllerOperation` and returns a 
+     `UIViewControllerAnimatedTransitioning` object. Used to allow customization of 
+     the animation. The default value is `HorizontalSlideAnimatedTransiton.init`. 
+     Setting this value to `nil` will default to the standard navigation controller 
+     animation.
+     */
     public var animatedTransitioningProvider: (UINavigationControllerOperation -> UIViewControllerAnimatedTransitioning)? = HorizontalSlideAnimatedTransiton.init
 
     public override func viewDidLoad() {
@@ -48,12 +55,45 @@ public class BoardingNavigationController: UINavigationController {
         configure(panGestureRecognizer, action: #selector(handlePan))
     }
 
+    /**
+     Initializes the `BoardingNavigationController` with a populated array of
+     view controllers to present. If the array is non-empty then it also sets
+     the root view controller to the first element in the array.
+
+     - parameter viewControllersToPresent: The array of view controllers to use 
+                 as default navigation options.
+     */
     public convenience init(viewControllersToPresent: [UIViewController]) {
-        guard let firstViewController = viewControllersToPresent.first else {
-            preconditionFailure("Requires at least one view conroller")
+        if let firstViewController = viewControllersToPresent.first {
+            self.init(rootViewController: firstViewController)
+        }else {
+            self.init()
         }
-        self.init(rootViewController: firstViewController)
         self.viewControllersToPresent = viewControllersToPresent
+    }
+
+    /**
+     Pushes the next view controller in boarding pass stack if one exists. 
+
+     - parameter animated: Specify true to animate the transition or false 
+     if you do not want the transition to be animated.
+     */
+    public func pushToNextViewController(animated animated: Bool) {
+        if let pushableViewController = topViewController.flatMap(boardingInfoAfter) {
+            pushViewController(pushableViewController, animated: animated)
+        }
+    }
+
+    /**
+     Pops to the previous view controller in the boarding pass stack if one exists.
+
+     - parameter animated: Specify true to animate the transition or false
+     if you do not want the transition to be animated.
+     */
+    public func popToPreviousViewController(animated animated: Bool) {
+        if let poppableViewController = topViewController.flatMap(boardingInfoAfter) {
+            popToAndInsertIfNeeded(poppableViewController, animated: animated)
+        }
     }
 }
 
@@ -138,21 +178,43 @@ private extension BoardingNavigationController {
         // The transitioning delegate being nil tells us that there isn't another active transition in play
         if transitionState.direction == .None && transitioningDelegate == nil {
             if xTranslation < 0 {
-                guard let pushableView = (topViewController as? BoardingInformation)?.nextViewController ?? viewControllerAfter(topViewController) else {
+                guard let pushableViewControler = topViewController.flatMap(boardingInfoAfter) else {
                     return
                 }
                 transitionState = TransitionState(direction: .Push, previousState: viewControllers)
-                pushViewController(pushableView, animated: true)
+                pushViewController(pushableViewControler, animated: true)
             }
             else if xTranslation > 0 {
-                guard let poppableView = (topViewController as? BoardingInformation)?.previousViewController ?? viewControllerBefore(topViewController) else {
+                guard let poppableViewController = topViewController.flatMap(boardingInfoBefore) else {
                     return
                 }
                 transitionState = TransitionState(direction: .Pop, previousState: viewControllers)
-                popToAndInsertIfNeeded(poppableView, animated: true)
+                popToAndInsertIfNeeded(poppableViewController, animated: true)
             }
         }
         interactionController?.updateInteractiveTransition(abs(percent))
+    }
+
+    func boardingInfoBefore(viewController: UIViewController) -> UIViewController? {
+        let poppableViewController: UIViewController?
+        if let boardingViewController = viewController as? BoardingInformation {
+            poppableViewController = boardingViewController.previousViewController
+        }
+        else {
+            poppableViewController = viewControllerBefore(viewController)
+        }
+        return poppableViewController
+    }
+
+    func boardingInfoAfter(viewController: UIViewController) -> UIViewController? {
+        let pushableViewControler: UIViewController?
+        if let boardingViewController = viewController as? BoardingInformation {
+            pushableViewControler = boardingViewController.nextViewController
+        }
+        else {
+            pushableViewControler = viewControllerAfter(viewController)
+        }
+        return pushableViewControler
     }
 
     func finishAnimation(forRecognizer recognizer: UIPanGestureRecognizer) {
