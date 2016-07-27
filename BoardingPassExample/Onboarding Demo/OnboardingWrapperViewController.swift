@@ -53,7 +53,7 @@ class OnboardingWrapperViewController: BoardingNavigationController {
     }
 
     static func sampleOnboarding() -> OnboardingWrapperViewController {
-        let onboarding = OnboardingWrapperViewController.init(rootViewController: FirstViewController())
+        let onboarding = OnboardingWrapperViewController(viewControllersToPresent: [FirstViewController(), SecondViewController(), ThirdViewController()])
         onboarding.navigationBar.addSubview(onboarding.progressSlider)
         onboarding.progressSlider.frame.size.height = 4
         onboarding.progressSlider.frame.size.width = onboarding.navigationBar.frame.width

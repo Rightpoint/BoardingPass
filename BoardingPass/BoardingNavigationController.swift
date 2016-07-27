@@ -34,6 +34,7 @@ public class BoardingNavigationController: UINavigationController {
     private let panGestureRecognizer = UIPanGestureRecognizer()
     private var transitionState = TransitionState()
     private var interactionController: UIPercentDrivenInteractiveTransition?
+    public var viewControllersToPresent: [UIViewController] = []
 
     /// An optional closure that takes a `UINavigationControllerOperation` and returns a
     /// `UIViewControllerAnimatedTransitioning` object. Used to allow customization of the animation. The default value
@@ -47,6 +48,13 @@ public class BoardingNavigationController: UINavigationController {
         configure(panGestureRecognizer, action: #selector(handlePan))
     }
 
+    public convenience init(viewControllersToPresent: [UIViewController]) {
+        guard let firstViewController = viewControllersToPresent.first else {
+            preconditionFailure("Requires at least one view conroller")
+        }
+        self.init(rootViewController: firstViewController)
+        self.viewControllersToPresent = viewControllersToPresent
+    }
 }
 
 extension BoardingNavigationController: UINavigationControllerDelegate {
@@ -92,6 +100,26 @@ private extension BoardingNavigationController {
 
 private extension BoardingNavigationController {
 
+    func viewControllerBefore(viewController: UIViewController?) -> UIViewController? {
+        guard let vc = viewController else {
+            return nil
+        }
+        guard let index = viewControllersToPresent.indexOf(vc) where index > 0 else {
+            return nil
+        }
+        return viewControllersToPresent[index.predecessor()]
+    }
+
+    func viewControllerAfter(viewController: UIViewController?) -> UIViewController? {
+        guard let vc = viewController else {
+            return nil
+        }
+        guard let index = viewControllersToPresent.indexOf(vc)?.successor() where index < viewControllersToPresent.count else {
+            return nil
+        }
+        return viewControllersToPresent[index]
+    }
+
     func updateAnimation(forRecognizer recognizer: UIPanGestureRecognizer) {
         let xTranslation = recognizer.translationInView(view).x
         let percent = xTranslation / view.frame.width
@@ -110,14 +138,14 @@ private extension BoardingNavigationController {
         // The transitioning delegate being nil tells us that there isn't another active transition in play
         if transitionState.direction == .None && transitioningDelegate == nil {
             if xTranslation < 0 {
-                guard let pushableView = (topViewController as? BoardingInformation)?.nextViewController else {
+                guard let pushableView = (topViewController as? BoardingInformation)?.nextViewController ?? viewControllerAfter(topViewController) else {
                     return
                 }
                 transitionState = TransitionState(direction: .Push, previousState: viewControllers)
                 pushViewController(pushableView, animated: true)
             }
             else if xTranslation > 0 {
-                guard let poppableView = (topViewController as? BoardingInformation)?.previousViewController else {
+                guard let poppableView = (topViewController as? BoardingInformation)?.previousViewController ?? viewControllerBefore(topViewController) else {
                     return
                 }
                 transitionState = TransitionState(direction: .Pop, previousState: viewControllers)

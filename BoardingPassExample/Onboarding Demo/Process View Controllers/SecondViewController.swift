@@ -35,11 +35,3 @@ extension SecondViewController: BackgroundColorProvider {
     }
 
 }
-
-extension SecondViewController: BoardingInformation {
-
-    var nextViewController: UIViewController? {
-        return ThirdViewController()
-    }
-
-}

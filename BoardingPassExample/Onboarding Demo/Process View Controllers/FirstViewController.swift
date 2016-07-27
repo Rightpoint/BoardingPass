@@ -31,10 +31,17 @@ class ActionableViewController: UIViewController {
 
 private extension ActionableViewController {
     @objc func handleNextTapped(sender: UIButton) {
-        guard let next = (self as? BoardingInformation)?.nextViewController else {
-            return
+        if let nextVC = (self as? BoardingInformation)?.nextViewController {
+            navigationController?.pushViewController(nextVC, animated: true)
         }
-        navigationController?.pushViewController(next, animated: true)
+        else {
+            guard let presentables = (navigationController as? BoardingNavigationController)?.viewControllersToPresent,
+                nextIndex = presentables.indexOf(self)?.successor()
+                where nextIndex < presentables.count else {
+                    return
+            }
+            navigationController?.pushViewController(presentables[nextIndex], animated: true)
+        }
     }
 
     @objc func handleSkipTapped(sender: UIButton) {
@@ -42,7 +49,7 @@ private extension ActionableViewController {
     }
 }
 
-class FirstViewController: ActionableViewController, BoardingInformation {
+class FirstViewController: ActionableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,10 +59,6 @@ class FirstViewController: ActionableViewController, BoardingInformation {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         performAlongsideCurrentCoordinator(animation)
-    }
-
-    var nextViewController: UIViewController? {
-        return SecondViewController()
     }
 
 }

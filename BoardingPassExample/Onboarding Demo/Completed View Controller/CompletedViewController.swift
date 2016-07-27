@@ -46,8 +46,9 @@ extension CompletedViewController: BackgroundColorProvider {
 
 private extension CompletedViewController {
     @objc func handleResetTapped(sender: UIButton) {
-        let origin = FirstViewController()
-        navigationController?.viewControllers.insert(origin, atIndex: 0)
+        guard let origin = navigationController?.viewControllers.first else {
+            return
+        }
         navigationController?.popToViewController(origin, animated: true)
     }
 }
