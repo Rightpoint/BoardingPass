@@ -1,10 +1,13 @@
 Pod::Spec.new do |s|
   s.name             = 'BoardingPass'
   s.version          = '0.1.0'
-  s.summary          = 'A Springboard-like navigation stack.'
+  s.summary          = 'A navigation controller interactive pan to push and pop.'
 
   s.description      = <<-DESC
-A springboard like view controller that allows for arbitrary
+BoardingPass is a subclass of `UINavigationController` with interactive push
+and pop gestures. It's offers behaviors similar to `UIPageViewController`,
+but with all of the familiar behaviors of navigation controller, and the
+ability to add fancy effects by animating alongside transitions.
                        DESC
 
   s.homepage         = 'https://github.com/Raizlabs/BoardingPass'
