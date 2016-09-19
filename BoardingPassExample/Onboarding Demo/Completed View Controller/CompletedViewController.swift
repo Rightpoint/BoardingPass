@@ -15,37 +15,40 @@ class CompletedViewController: UIViewController {
         super.viewDidLoad()
         navigationItem.hidesBackButton = true
         navigationItem.title = NSLocalizedString("Completed", comment: "completed onboarding title")
-        let resetButton = UIButton(title: NSLocalizedString("Reset", comment: "Reset button title"), font: UIFont.preferredFontForTextStyle(UIFontTextStyleTitle1))
-        resetButton.addTarget(self, action: #selector(handleResetTapped), forControlEvents: .TouchUpInside)
+        let resetButton = UIButton(title: NSLocalizedString("Reset", comment: "Reset button title"), font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.title1))
+        resetButton.addTarget(self, action: #selector(handleResetTapped), for: .touchUpInside)
         view.addSubview(resetButton)
         let constraints: [NSLayoutConstraint] = [
-            resetButton.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-            bottomLayoutGuide.topAnchor.constraintEqualToAnchor(resetButton.bottomAnchor, constant: 10),
+            resetButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            bottomLayoutGuide.topAnchor.constraint(equalTo: resetButton.bottomAnchor, constant: 10),
             ]
         resetButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activateConstraints(constraints)
+        NSLayoutConstraint.activate(constraints)
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        performCoordinatedAnimations(animation)
+        perform(coordinatedAnimations: animation)
     }
 }
 
 extension CompletedViewController: BackgroundColorProvider {
 
     var backgroundColor: UIColor {
-        return .whiteColor()
+        return .white
     }
 
-    var currentProgress: NSProgress {
-        return NSProgress(completedUnitCount: 4, totalUnitCount: 4)
+    var currentProgress: Progress {
+//        return Progress(parent: Progress4, userInfo: 4)
+        let progress = Progress(totalUnitCount: 4)
+        progress.completedUnitCount = 4
+        return progress
     }
 
 }
 
 private extension CompletedViewController {
-    @objc func handleResetTapped(sender: UIButton) {
+    @objc func handleResetTapped(_ sender: UIButton) {
         guard let origin = navigationController?.viewControllers.first else {
             return
         }

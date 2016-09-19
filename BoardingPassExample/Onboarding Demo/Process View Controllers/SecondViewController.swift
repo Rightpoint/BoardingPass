@@ -16,9 +16,9 @@ class SecondViewController: ActionableViewController {
         navigationItem.title = NSLocalizedString("Second", comment: "Second View controller title")
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        performCoordinatedAnimations(animation)
+        perform(coordinatedAnimations: animation)
     }
 
 
@@ -30,8 +30,12 @@ extension SecondViewController: BackgroundColorProvider {
         return UIColor(white: 0.5, alpha: 1)
     }
 
-    var currentProgress: NSProgress {
-        return NSProgress(completedUnitCount: 2, totalUnitCount: 4)
+    var currentProgress: Progress {
+//        return Progress(parent: 2, userInfo: 4)
+        let progress = Progress(totalUnitCount: 4)
+        progress.completedUnitCount = 2
+        return progress
+
     }
 
 }

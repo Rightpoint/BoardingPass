@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23A09E271D908D05004A9ADF /* BoardingPassCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A09E261D908D05004A9ADF /* BoardingPassCompatibility.swift */; };
 		7264CA211D3FC4AB00033FC4 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264CA201D3FC4AB00033FC4 /* FirstViewController.swift */; };
 		7264CA231D3FC4B300033FC4 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264CA221D3FC4B300033FC4 /* SecondViewController.swift */; };
 		7264CA251D3FC4B900033FC4 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264CA241D3FC4B900033FC4 /* ThirdViewController.swift */; };
@@ -58,6 +59,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		23A09E261D908D05004A9ADF /* BoardingPassCompatibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardingPassCompatibility.swift; sourceTree = "<group>"; };
 		7264CA201D3FC4AB00033FC4 /* FirstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		7264CA221D3FC4B300033FC4 /* SecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		7264CA241D3FC4B900033FC4 /* ThirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				7264CA2D1D3FEB2A00033FC4 /* BoardingInformation.swift */,
 				7264CA2B1D3FC69800033FC4 /* BoardingNavigationController.swift */,
 				7264CA341D4001BD00033FC4 /* HorizontalSlideAnimatedTransition.swift */,
+				23A09E261D908D05004A9ADF /* BoardingPassCompatibility.swift */,
 			);
 			path = BoardingPass;
 			sourceTree = "<group>";
@@ -304,12 +307,15 @@
 				TargetAttributes = {
 					72BE8D651D3EC55E005720FB = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 					72BE8D741D3FBC05005720FB = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 					72BE8D831D3FBCDE005720FB = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -396,6 +402,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7264CA2E1D3FEB2A00033FC4 /* BoardingInformation.swift in Sources */,
+				23A09E271D908D05004A9ADF /* BoardingPassCompatibility.swift in Sources */,
 				7264CA351D4001BD00033FC4 /* HorizontalSlideAnimatedTransition.swift in Sources */,
 				7264CA2C1D3FC69800033FC4 /* BoardingNavigationController.swift in Sources */,
 			);
@@ -557,6 +564,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -574,6 +582,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.raizlabs.BoardingPass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -584,6 +593,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.raizlabs.BoardingPassTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -594,6 +604,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.raizlabs.BoardingPassTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -606,6 +617,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.raizlabs.BoardingPassExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -618,6 +630,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.raizlabs.BoardingPassExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

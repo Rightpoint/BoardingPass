@@ -19,8 +19,8 @@ public protocol BoardingInformation {
 
 }
 
-public typealias AnimationFactory = (container: UIViewController?, animated: Bool) -> (() -> ())
-public typealias ContextualAnimation = (context: UIViewControllerTransitionCoordinatorContext) -> ()
+public typealias AnimationFactory = (_ container: UIViewController?, _ animated: Bool) -> (() -> ())
+public typealias ContextualAnimation = (_ context: UIViewControllerTransitionCoordinatorContext) -> ()
 
 public extension UIViewController {
 
@@ -35,27 +35,27 @@ public extension UIViewController {
      - parameter cancellation: A cancellation action to handle restoration of any state that isn't properly rolled back
                               if the animation block is cancelled
      */
-    final public func performCoordinatedAnimations(animation: AnimationFactory? = nil,
+    final public func perform(coordinatedAnimations animation: AnimationFactory? = nil,
                                                          completion: AnimationFactory? = nil,
                                                          cancellation: ContextualAnimation? = nil) {
-        let parentController = self.parentViewController
+        let parentController = self.parent
         let animationInContext: ContextualAnimation = { (context: UIViewControllerTransitionCoordinatorContext) in
-            animation?(container: parentController, animated: context.isAnimated())()
+            animation?(parentController, context.isAnimated)()
         }
         let completionInContext = { (context: UIViewControllerTransitionCoordinatorContext) in
-            if context.isCancelled() {
-                cancellation?(context: context)
+            if context.isCancelled {
+                cancellation?(context)
             }
             else {
-                completion?(container: parentController, animated: context.isAnimated())()
+                completion?(parentController, context.isAnimated)()
             }
         }
-        if let coordinator = transitionCoordinator() {
-            coordinator.animateAlongsideTransitionInView(parentViewController?.view, animation: animationInContext, completion: completionInContext)
+        if let coordinator = transitionCoordinator {
+            coordinator.animateAlongsideTransition(in: parent?.view, animation: animationInContext, completion: completionInContext)
         }
         else {
-            animation?(container: parentViewController, animated: false)()
-            completion?(container: parentViewController, animated: false)()
+            animation?(parent, false)()
+            completion?(parent, false)()
         }
     }
 }
@@ -69,7 +69,7 @@ public extension BoardingInformation {
         guard let viewController = self as? UIViewController else {
             return nil
         }
-        return viewController.navigationController?.viewControllerBefore(viewController)
+        return viewController.navigationController?.viewController(beforeController: viewController)
     }
 
     var allowGestures: Bool {
@@ -80,11 +80,14 @@ public extension BoardingInformation {
 
 private  extension UINavigationController {
 
-    func viewControllerBefore(viewController: UIViewController) -> UIViewController? {
-        guard let index = viewControllers.indexOf(viewController) where index > 0 else {
+    func viewController(beforeController viewController: UIViewController) -> UIViewController? {
+        guard let index = viewControllers.index(of: viewController) else {
             return nil
         }
-        return viewControllers[index.predecessor()]
+        guard index > 0 else {
+            return nil
+        }
+        return viewControllers[(index - 1)]
     }
 
 }

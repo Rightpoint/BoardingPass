@@ -16,25 +16,25 @@ class ActionableViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem.skipButton
         navigationItem.rightBarButtonItem?.target = self
         navigationItem.rightBarButtonItem?.action = #selector(handleSkipTapped)
-        let nextButton = UIButton(title: NSLocalizedString("Next", comment: "Next button title"), font: UIFont.preferredFontForTextStyle(UIFontTextStyleTitle1))
-        nextButton.addTarget(self, action: #selector(handleNextTapped), forControlEvents: .TouchUpInside)
+        let nextButton = UIButton(title: NSLocalizedString("Next", comment: "Next button title"), font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.title1))
+        nextButton.addTarget(self, action: #selector(handleNextTapped), for: .touchUpInside)
         view.addSubview(nextButton)
         let constraints: [NSLayoutConstraint] = [
-            nextButton.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-            bottomLayoutGuide.topAnchor.constraintEqualToAnchor(nextButton.bottomAnchor, constant: 10),
+            nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            bottomLayoutGuide.topAnchor.constraint(equalTo: nextButton.bottomAnchor, constant: 10),
             ]
         nextButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activateConstraints(constraints)
+        NSLayoutConstraint.activate(constraints)
     }
 
 }
 
 private extension ActionableViewController {
-    @objc func handleNextTapped(sender: UIButton) {
+    @objc func handleNextTapped(_ sender: UIButton) {
         (navigationController as? BoardingNavigationController)?.pushToNextViewController(animated: true)
     }
 
-    @objc func handleSkipTapped(sender: UIButton) {
+    @objc func handleSkipTapped(_ sender: UIButton) {
         navigationController?.pushViewController(CompletedViewController(), animated: true)
     }
 }

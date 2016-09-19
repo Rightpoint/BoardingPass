@@ -8,14 +8,14 @@
 
 import UIKit
 
-private struct TransitionState {
-    private enum Direction {
-        case Push
-        case Pop
-        case None
+struct TransitionState {
+    enum Direction {
+        case push
+        case pop
+        case none
     }
 
-    var direction: Direction = .None
+    var direction: Direction = .none
     var previousState: [UIViewController]?
 
     init(direction: Direction, previousState: [UIViewController]) {
@@ -24,16 +24,16 @@ private struct TransitionState {
     }
 
     init() {
-        direction = .None
+        direction = .none
         previousState = nil
     }
 }
 
-public class BoardingNavigationController: UINavigationController {
+open class BoardingNavigationController: UINavigationController {
 
-    private let panGestureRecognizer = UIPanGestureRecognizer()
-    private var transitionState = TransitionState()
-    private var interactionController: UIPercentDrivenInteractiveTransition?
+    let panGestureRecognizer = UIPanGestureRecognizer()
+    var transitionState = TransitionState()
+    var interactionController: UIPercentDrivenInteractiveTransition?
 
     /// An array of view controllers used to determine the next or previous view
     /// controller to present in the series. These are ignored if the top view
@@ -47,9 +47,9 @@ public class BoardingNavigationController: UINavigationController {
      Setting this value to `nil` will default to the standard navigation controller
      animation.
      */
-    public var animatedTransitioningProvider: (UINavigationControllerOperation -> UIViewControllerAnimatedTransitioning)? = HorizontalSlideAnimatedTransiton.init
+    public var animatedTransitioningProvider: ((UINavigationControllerOperation) -> UIViewControllerAnimatedTransitioning)? = HorizontalSlideAnimatedTransiton.init
 
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
         configure(panGestureRecognizer, action: #selector(handlePan))
@@ -79,8 +79,8 @@ public class BoardingNavigationController: UINavigationController {
      - parameter animated: Specify true to animate the transition or false
      if you do not want the transition to be animated.
      */
-    public func pushToNextViewController(animated animated: Bool) {
-        if let pushableViewController = topViewController.flatMap(boardingInfoAfter) {
+    public func pushToNextViewController(animated: Bool) {
+        if let pushableViewController = topViewController.flatMap({ boardingInfo(afterController: $0) }) {
             pushViewController(pushableViewController, animated: animated)
         }
     }
@@ -91,8 +91,8 @@ public class BoardingNavigationController: UINavigationController {
      - parameter animated: Specify true to animate the transition or false
      if you do not want the transition to be animated.
      */
-    public func popToPreviousViewController(animated animated: Bool) {
-        if let poppableViewController = topViewController.flatMap(boardingInfoAfter) {
+    public func popToPreviousViewController(animated: Bool) {
+        if let poppableViewController = topViewController.flatMap({ boardingInfo(afterController: $0) }) {
             popToAndInsertIfNeeded(poppableViewController, animated: animated)
         }
     }
@@ -100,40 +100,40 @@ public class BoardingNavigationController: UINavigationController {
 
 extension BoardingNavigationController: UINavigationControllerDelegate {
 
-    public func navigationController(navigationController: UINavigationController,
-                                     animationControllerForOperation operation: UINavigationControllerOperation,
-                                     fromViewController fromVC: UIViewController,
-                                     toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    public func navigationController(_ navigationController: UINavigationController,
+                                     animationControllerFor operation: UINavigationControllerOperation,
+                                     from fromVC: UIViewController,
+                                     to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return animatedTransitioningProvider?(operation)
     }
 
-    public func navigationController(navigationController: UINavigationController, interactionControllerForAnimationController animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+    public func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         return interactionController
     }
 }
 
 // MARK: - Actions
 private extension BoardingNavigationController {
-    func popToAndInsertIfNeeded(viewController: UIViewController, animated: Bool) {
+    func popToAndInsertIfNeeded(_ viewController: UIViewController, animated: Bool) {
         if !viewControllers.contains(viewController) {
             if viewControllers.count > 1 {
                 viewControllers.insert(viewController,
-                                       atIndex: viewControllers.endIndex.predecessor().predecessor())
+                                       at: ((viewControllers.endIndex - 1) - 1))
             }
             else {
-                viewControllers.insert(viewController, atIndex: viewControllers.startIndex)
+                viewControllers.insert(viewController, at: viewControllers.startIndex)
             }
         }
         popToViewController(viewController, animated: animated)
     }
 
-    @objc func handlePan(sender: UIPanGestureRecognizer) {
+    @objc func handlePan(_ sender: UIPanGestureRecognizer) {
         switch sender.state {
-        case .Began, .Possible:
+        case .began, .possible:
             break
-        case .Changed:
+        case .changed:
             updateAnimation(forRecognizer: sender)
-        case .Ended, .Failed, .Cancelled:
+        case .ended, .failed, .cancelled:
             finishAnimation(forRecognizer: sender)
         }
     }
@@ -141,98 +141,105 @@ private extension BoardingNavigationController {
 
 private extension BoardingNavigationController {
 
-    func viewControllerBefore(viewController: UIViewController?) -> UIViewController? {
+    func viewController(beforeController viewController: UIViewController?) -> UIViewController? {
         guard let vc = viewController else {
             return nil
         }
-        guard let index = viewControllersToPresent.indexOf(vc) where index > 0 else {
+        guard let index = viewControllersToPresent.index(of: vc) , index > 0 else {
             return nil
         }
-        return viewControllersToPresent[index.predecessor()]
+        return viewControllersToPresent[(index - 1)]
     }
 
-    func viewControllerAfter(viewController: UIViewController?) -> UIViewController? {
+    func viewController(afterController viewController: UIViewController?) -> UIViewController? {
         guard let vc = viewController else {
             return nil
         }
-        guard let index = viewControllersToPresent.indexOf(vc)?.successor() where index < viewControllersToPresent.count else {
+        guard let index = ((viewControllersToPresent.index(of: vc))) else {
             return nil
         }
-        return viewControllersToPresent[index]
+
+        let adjustedIndex = index + 1
+
+        guard adjustedIndex < viewControllersToPresent.count else {
+            return nil
+        }
+
+        return viewControllersToPresent[adjustedIndex]
     }
 
     func updateAnimation(forRecognizer recognizer: UIPanGestureRecognizer) {
-        let xTranslation = recognizer.translationInView(view).x
+        let xTranslation = recognizer.translation(in: view).x
         let percent = xTranslation / view.frame.width
-        if (percent < 0 && transitionState.direction == .Pop) ||
-            (percent > 0 && transitionState.direction == .Push) {
+        if (percent < 0 && transitionState.direction == .pop) ||
+            (percent > 0 && transitionState.direction == .push) {
             return
         }
-        if (percent > 0.66 && transitionState.direction == .Pop) ||
-            (percent < -0.66 && transitionState.direction == .Push) {
-            recognizer.enabled = false
+        if (percent > 0.66 && transitionState.direction == .pop) ||
+            (percent < -0.66 && transitionState.direction == .push) {
+            recognizer.isEnabled = false
             return
         }
         if interactionController == nil {
             interactionController = UIPercentDrivenInteractiveTransition()
         }
         // The transitioning delegate being nil tells us that there isn't another active transition in play
-        if transitionState.direction == .None && transitioningDelegate == nil {
+        if transitionState.direction == .none && transitioningDelegate == nil {
             if xTranslation < 0 {
-                guard let pushableViewControler = topViewController.flatMap(boardingInfoAfter) else {
+                guard let pushableViewControler = topViewController.flatMap({ boardingInfo(afterController: $0) }) else {
                     return
                 }
-                transitionState = TransitionState(direction: .Push, previousState: viewControllers)
+                transitionState = TransitionState(direction: .push, previousState: viewControllers)
                 pushViewController(pushableViewControler, animated: true)
             }
             else if xTranslation > 0 {
-                guard let poppableViewController = topViewController.flatMap(boardingInfoBefore) else {
+                guard let poppableViewController = topViewController.flatMap({ boardingInfo(beforeController: $0) }) else {
                     return
                 }
-                transitionState = TransitionState(direction: .Pop, previousState: viewControllers)
+                transitionState = TransitionState(direction: .pop, previousState: viewControllers)
                 popToAndInsertIfNeeded(poppableViewController, animated: true)
             }
         }
-        interactionController?.updateInteractiveTransition(abs(percent))
+        interactionController?.update(abs(percent))
     }
 
-    func boardingInfoBefore(viewController: UIViewController) -> UIViewController? {
+    func boardingInfo(beforeController viewController: UIViewController) -> UIViewController? {
         let poppableViewController: UIViewController?
         if let boardingViewController = viewController as? BoardingInformation {
             poppableViewController = boardingViewController.previousViewController
         }
         else {
-            poppableViewController = viewControllerBefore(viewController)
+            poppableViewController = self.viewController(beforeController: viewController)
         }
         return poppableViewController
     }
 
-    func boardingInfoAfter(viewController: UIViewController) -> UIViewController? {
+    func boardingInfo(afterController viewController: UIViewController) -> UIViewController? {
         let pushableViewControler: UIViewController?
         if let boardingViewController = viewController as? BoardingInformation {
             pushableViewControler = boardingViewController.nextViewController
         }
         else {
-            pushableViewControler = viewControllerAfter(viewController)
+            pushableViewControler = self.viewController(afterController: viewController)
         }
         return pushableViewControler
     }
 
     func finishAnimation(forRecognizer recognizer: UIPanGestureRecognizer) {
-        recognizer.enabled = true
-        let rawVelocity = recognizer.velocityInView(view).x
+        recognizer.isEnabled = true
+        let rawVelocity = recognizer.velocity(in: view).x
         let velocityPercentPerSecond: CGFloat
         switch transitionState.direction {
-        case .Pop:
+        case .pop:
             velocityPercentPerSecond =  rawVelocity / view.frame.width
-        case .Push:
+        case .push:
             velocityPercentPerSecond =  -rawVelocity / view.frame.width
-        case .None:
+        case .none:
             velocityPercentPerSecond = 0
         }
         let percentComplete = interactionController?.percentComplete ?? 0
         if percentComplete > 0.5 || percentComplete + velocityPercentPerSecond > 0.75 {
-            interactionController?.finishInteractiveTransition()
+            interactionController?.finish()
             interactionController = nil
             transitionState = TransitionState()
         }
@@ -242,17 +249,17 @@ private extension BoardingNavigationController {
     }
 
     func cleanUpAnimation() {
-        interactionController?.cancelInteractiveTransition()
+        interactionController?.cancel()
         if let previousState = transitionState.previousState {
             viewControllers = previousState
         }
         interactionController = nil
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.transitionState = TransitionState()
         }
     }
 
-    func configure(gestureRecognizer: UIGestureRecognizer, action: Selector) {
+    func configure(_ gestureRecognizer: UIGestureRecognizer, action: Selector) {
         gestureRecognizer.addTarget(self, action: action)
         view.addGestureRecognizer(gestureRecognizer)
     }
