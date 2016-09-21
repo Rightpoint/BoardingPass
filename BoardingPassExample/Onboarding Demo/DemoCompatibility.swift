@@ -85,13 +85,6 @@ import UIKit
         @nonobjc static let title1: UIFontTextStyle = UIFontTextStyleTitle1
     }
 
-    extension UIFont {
-
-        @nonobjc class func preferredFont(forTextStyle style: UIFontTextStyle) -> UIFont {
-            return preferredFontForTextStyle(style as String)
-        }
-    }
-
     extension NSLayoutConstraint {
         class func activate(constraints: [NSLayoutConstraint]) {
             activateConstraints(constraints)
@@ -103,5 +96,38 @@ import UIKit
             return constraintEqualToAnchor(anchor)
         }
     }
+
+#endif
+
+#if swift(>=2.3)
+    #if swift(>=3.0)
+    #else
+        extension UIFont {
+            @nonobjc class func preferredFont(forTextStyle style: UIFontTextStyle) -> UIFont {
+                return preferredFontForTextStyle(style as String)
+            }
+        }
+    #endif
+#else
+
+    extension UIFont {
+        @nonobjc class func preferredFont(forTextStyle style: UIFontTextStyle) -> UIFont {
+            return preferredFontForTextStyle(style.rawValue)
+        }
+    }
+
+    struct UIFontTextStyle: RawRepresentable {
+        typealias RawValue = String
+        var rawValue: RawValue
+        init?(rawValue: RawValue) {
+            self.rawValue = rawValue
+        }
+
+        /// NOTE: This is only used as a compatibility measure for a uniform demo app code base.
+        /// This pattern is *not* recommended and could be breaking in the future.
+        static let UIFontTextStyleTitle1: UIFontTextStyle = UIFontTextStyle(rawValue: "UICTFontTextStyleTitle1")!
+    }
+
+    struct UITransitionContextViewControllerKey { }
 
 #endif

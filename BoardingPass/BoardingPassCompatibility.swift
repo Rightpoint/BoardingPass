@@ -36,14 +36,9 @@ import UIKit
     // MARK: - Transitions
 
     extension UIViewControllerContextTransitioning {
+
         func viewController(forKey key: String) -> UIViewController? {
             return viewControllerForKey(key)
-        }
-    }
-
-    extension UIViewControllerContextTransitioning {
-        var containerView: UIView {
-            return containerView()
         }
     }
 
@@ -149,6 +144,27 @@ import UIKit
             insert(newElement, atIndex: at)
         }
 
+    }
+
+#endif
+
+#if swift(>=2.3)
+    #if swift(>=3.0)
+    #else
+        extension UIViewControllerContextTransitioning {
+            var containerView: UIView {
+                return containerView()
+            }
+        }
+    #endif
+#else
+
+    struct UITransitionContextViewControllerKey {}
+
+    extension UIViewControllerContextTransitioning {
+        var containerView: UIView {
+            return containerView()!
+        }
     }
 
 #endif
