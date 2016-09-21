@@ -9,6 +9,10 @@
 import UIKit
 
 #if swift(>=3.0)
+
+let UITransitionContextToViewControllerKey: UITransitionContextViewControllerKey = UITransitionContextViewControllerKey.to
+let UITransitionContextFromViewControllerKey: UITransitionContextViewControllerKey = UITransitionContextViewControllerKey.from
+
 #else
 
     typealias Progress = NSProgress
@@ -27,11 +31,6 @@ import UIKit
         func translatedBy(x xVal: CGFloat, y yVal: CGFloat) -> CGAffineTransform {
             return CGAffineTransformTranslate(self, xVal, yVal)
         }
-    }
-
-    extension UITransitionContextViewControllerKey {
-        @nonobjc static let from: String = UITransitionContextFromViewControllerKey
-        @nonobjc static let to: String = UITransitionContextToViewControllerKey
     }
 
     extension UIViewControllerTransitionCoordinatorContext {
@@ -73,16 +72,18 @@ import UIKit
         }
     }
 
+    extension UIFont {
+        @nonobjc static func systemFont(ofSize size: CGFloat) -> UIFont {
+            return UIFont.systemFontOfSize(size)
+        }
+    }
+
     extension UIButtonType {
         @nonobjc static let system: UIButtonType = UIButtonType.System
     }
 
     extension UIBarButtonItemStyle {
         @nonobjc static let plain: UIBarButtonItemStyle = UIBarButtonItemStyle.Plain
-    }
-
-    extension UIFontTextStyle {
-        @nonobjc static let title1: UIFontTextStyle = UIFontTextStyleTitle1
     }
 
     extension NSLayoutConstraint {
@@ -96,38 +97,5 @@ import UIKit
             return constraintEqualToAnchor(anchor)
         }
     }
-
-#endif
-
-#if swift(>=2.3)
-    #if swift(>=3.0)
-    #else
-        extension UIFont {
-            @nonobjc class func preferredFont(forTextStyle style: UIFontTextStyle) -> UIFont {
-                return preferredFontForTextStyle(style as String)
-            }
-        }
-    #endif
-#else
-
-    extension UIFont {
-        @nonobjc class func preferredFont(forTextStyle style: UIFontTextStyle) -> UIFont {
-            return preferredFontForTextStyle(style.rawValue)
-        }
-    }
-
-    struct UIFontTextStyle: RawRepresentable {
-        typealias RawValue = String
-        var rawValue: RawValue
-        init?(rawValue: RawValue) {
-            self.rawValue = rawValue
-        }
-
-        /// NOTE: This is only used as a compatibility measure for a uniform demo app code base.
-        /// This pattern is *not* recommended and could be breaking in the future.
-        static let UIFontTextStyleTitle1: UIFontTextStyle = UIFontTextStyle(rawValue: "UICTFontTextStyleTitle1")!
-    }
-
-    struct UITransitionContextViewControllerKey { }
 
 #endif

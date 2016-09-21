@@ -55,18 +55,23 @@ public class HorizontalSlideAnimatedTransiton: NSObject {
 extension HorizontalSlideAnimatedTransiton: UIViewControllerAnimatedTransitioning {
 
     public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        guard let presented = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to),
-            let presenting = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from) else {
-            transitionContext.completeTransition(false)
-            return
+
+        guard let presented = transitionContext.viewController(forKey: UITransitionContextToViewControllerKey),
+            let presenting = transitionContext.viewController(forKey: UITransitionContextFromViewControllerKey) else {
+                transitionContext.completeTransition(false)
+                return
         }
-        transitionContext.containerView.addSubview(presented.view)
+
+        // Optional for backward compatibility
+        let container: UIView? = transitionContext.containerView
+
+        container?.addSubview(presented.view)
         let width: CGFloat
         switch slideType {
         case .push:
-            width = transitionContext.containerView.frame.width
+            width = container?.frame.width ?? 0
         case .pop:
-            width = -(transitionContext.containerView.frame.width)
+            width = -(container?.frame.width ?? 0)
         }
         presented.view.transform = CGAffineTransform(translationX: width, y: 0)
         let animations = {

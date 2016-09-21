@@ -15,11 +15,11 @@ protocol BackgroundColorProvider {
 
 public extension UIViewControllerTransitionCoordinatorContext {
     var toViewController: UIViewController? {
-        return viewController(forKey: UITransitionContextViewControllerKey.to)
+        return viewController(forKey: UITransitionContextToViewControllerKey)
     }
 
     var fromViewController: UIViewController? {
-        return viewController(forKey: UITransitionContextViewControllerKey.from)
+        return viewController(forKey: UITransitionContextFromViewControllerKey)
     }
 }
 
@@ -38,7 +38,7 @@ extension BackgroundColorProvider {
 
 class OnboardingWrapperViewController: BoardingNavigationController {
 
-    // We're creating a non-standard progress slider because the UIProgressView
+    // We're creating a non-standard progress slider because the UIProgressVie
     // has a visual glitch when the animation is cancelled, probably due to
     // CALayer animations
     let progressSlider = UIView()
@@ -69,3 +69,5 @@ class OnboardingWrapperViewController: BoardingNavigationController {
     }
 
 }
+
+let OnboardingFont: UIFont = UIFont.systemFont(ofSize: 26.0)

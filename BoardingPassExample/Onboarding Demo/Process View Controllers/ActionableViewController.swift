@@ -16,7 +16,7 @@ class ActionableViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem.skipButton
         navigationItem.rightBarButtonItem?.target = self
         navigationItem.rightBarButtonItem?.action = #selector(handleSkipTapped)
-        let nextButton = UIButton(title: NSLocalizedString("Next", comment: "Next button title"), font: UIFont.preferredFont(forTextStyle: UIFontTextStyle.title1))
+        let nextButton = UIButton(title: NSLocalizedString("Next", comment: "Next button title"), font: OnboardingFont)
         nextButton.addTarget(self, action: #selector(handleNextTapped), for: .touchUpInside)
         view.addSubview(nextButton)
         let constraints: [NSLayoutConstraint] = [

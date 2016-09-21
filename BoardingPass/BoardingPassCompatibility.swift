@@ -9,6 +9,10 @@
 import UIKit
 
 #if swift(>=3.0)
+
+    let UITransitionContextToViewControllerKey: UITransitionContextViewControllerKey = UITransitionContextViewControllerKey.to
+    let UITransitionContextFromViewControllerKey: UITransitionContextViewControllerKey = UITransitionContextViewControllerKey.from
+
 #else
 
     extension UIViewController {
@@ -40,6 +44,10 @@ import UIKit
         func viewController(forKey key: String) -> UIViewController? {
             return viewControllerForKey(key)
         }
+
+        var containerView: UIView? {
+            return containerView()
+        }
     }
 
     public typealias TimeInterval = NSTimeInterval
@@ -53,11 +61,6 @@ import UIKit
             return transitionDuration(using: transitionContext)
         }
 
-    }
-
-    extension UITransitionContextViewControllerKey {
-        @nonobjc static let from: String = UITransitionContextFromViewControllerKey
-        @nonobjc static let to: String = UITransitionContextToViewControllerKey
     }
 
     extension UIViewControllerTransitionCoordinator {
@@ -144,27 +147,6 @@ import UIKit
             insert(newElement, atIndex: at)
         }
 
-    }
-
-#endif
-
-#if swift(>=2.3)
-    #if swift(>=3.0)
-    #else
-        extension UIViewControllerContextTransitioning {
-            var containerView: UIView {
-                return containerView()
-            }
-        }
-    #endif
-#else
-
-    struct UITransitionContextViewControllerKey {}
-
-    extension UIViewControllerContextTransitioning {
-        var containerView: UIView {
-            return containerView()!
-        }
     }
 
 #endif
