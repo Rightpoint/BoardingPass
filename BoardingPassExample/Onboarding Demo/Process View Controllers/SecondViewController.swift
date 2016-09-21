@@ -31,11 +31,7 @@ extension SecondViewController: BackgroundColorProvider {
     }
 
     var currentProgress: Progress {
-//        return Progress(parent: 2, userInfo: 4)
-        let progress = Progress(totalUnitCount: 4)
-        progress.completedUnitCount = 2
-        return progress
-
+        return Progress(completedUnitCount: 2, totalUnitCount: 4)
     }
 
 }

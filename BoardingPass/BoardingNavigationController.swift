@@ -29,6 +29,10 @@ struct TransitionState {
     }
 }
 
+// MARK: - Core
+
+#if swift(>=3.0)
+
 open class BoardingNavigationController: UINavigationController {
 
     let panGestureRecognizer = UIPanGestureRecognizer()
@@ -52,16 +56,82 @@ open class BoardingNavigationController: UINavigationController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
-        configure(panGestureRecognizer, action: #selector(handlePan))
+        configure(gestureRecognizer: panGestureRecognizer, action: #selector(handlePan))
+    }
+}
+
+#else
+
+public class BoardingNavigationController: UINavigationController {
+
+    let panGestureRecognizer = UIPanGestureRecognizer()
+    var transitionState = TransitionState()
+    var interactionController: UIPercentDrivenInteractiveTransition?
+
+    /// An array of view controllers used to determine the next or previous view
+    /// controller to present in the series. These are ignored if the top view
+    /// controller conforms to `BoardingInformation`
+    public var viewControllersToPresent: [UIViewController] = []
+
+    /**
+     An optional closure that takes a `UINavigationControllerOperation` and returns a
+     `UIViewControllerAnimatedTransitioning` object. Used to allow customization of
+     the animation. The default value is `HorizontalSlideAnimatedTransiton.init`.
+     Setting this value to `nil` will default to the standard navigation controller
+     animation.
+     */
+    public var animatedTransitioningProvider: ((UINavigationControllerOperation) -> UIViewControllerAnimatedTransitioning)? = HorizontalSlideAnimatedTransiton.init
+
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        delegate = self
+        configure(gestureRecognizer: panGestureRecognizer, action: #selector(handlePan))
+    }
+}
+
+#endif
+
+// MARK: - Navigation Delegate
+
+#if swift(>=3.0)
+
+extension BoardingNavigationController: UINavigationControllerDelegate {
+
+    public func navigationController(_ navigationController: UINavigationController,
+                                     animationControllerFor operation: UINavigationControllerOperation,
+                                     from fromVC: UIViewController,
+                                     to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return animatedTransitioningProvider?(operation)
     }
 
+    public func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return interactionController
+    }
+}
+
+
+#else
+
+extension BoardingNavigationController: UINavigationControllerDelegate {
+    public func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return animatedTransitioningProvider?(operation)
+    }
+
+    public func navigationController(navigationController: UINavigationController, interactionControllerForAnimationController animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return interactionController
+    }
+}
+
+#endif
+
+public extension BoardingNavigationController {
     /**
      Initializes the `BoardingNavigationController` with a populated array of
      view controllers to present. If the array is non-empty then it also sets
      the root view controller to the first element in the array.
 
      - parameter viewControllersToPresent: The array of view controllers to use
-                 as default navigation options.
+     as default navigation options.
      */
     public convenience init(viewControllersToPresent: [UIViewController]) {
         if let firstViewController = viewControllersToPresent.first {
@@ -79,9 +149,9 @@ open class BoardingNavigationController: UINavigationController {
      - parameter animated: Specify true to animate the transition or false
      if you do not want the transition to be animated.
      */
-    public func pushToNextViewController(animated: Bool) {
+    public func pushToNextViewController(animated isAnimated: Bool) {
         if let pushableViewController = topViewController.flatMap({ boardingInfo(afterController: $0) }) {
-            pushViewController(pushableViewController, animated: animated)
+            pushViewController(pushableViewController, animated: isAnimated)
         }
     }
 
@@ -93,28 +163,16 @@ open class BoardingNavigationController: UINavigationController {
      */
     public func popToPreviousViewController(animated: Bool) {
         if let poppableViewController = topViewController.flatMap({ boardingInfo(afterController: $0) }) {
-            popToAndInsertIfNeeded(poppableViewController, animated: animated)
+            popToAndInsertIfNeeded(controller: poppableViewController, animated: animated)
         }
     }
 }
 
-extension BoardingNavigationController: UINavigationControllerDelegate {
+// MARK: - Extensions
 
-    public func navigationController(_ navigationController: UINavigationController,
-                                     animationControllerFor operation: UINavigationControllerOperation,
-                                     from fromVC: UIViewController,
-                                     to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return animatedTransitioningProvider?(operation)
-    }
-
-    public func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        return interactionController
-    }
-}
-
-// MARK: - Actions
+// MARK: Actions
 private extension BoardingNavigationController {
-    func popToAndInsertIfNeeded(_ viewController: UIViewController, animated: Bool) {
+    func popToAndInsertIfNeeded(controller viewController: UIViewController, animated: Bool) {
         if !viewControllers.contains(viewController) {
             if viewControllers.count > 1 {
                 viewControllers.insert(viewController,
@@ -127,7 +185,8 @@ private extension BoardingNavigationController {
         popToViewController(viewController, animated: animated)
     }
 
-    @objc func handlePan(_ sender: UIPanGestureRecognizer) {
+#if swift(>=3.0)
+    @objc func handlePan(from sender: UIPanGestureRecognizer) {
         switch sender.state {
         case .began, .possible:
             break
@@ -137,6 +196,18 @@ private extension BoardingNavigationController {
             finishAnimation(forRecognizer: sender)
         }
     }
+#else
+    @objc func handlePan(from sender: UIPanGestureRecognizer) {
+        switch sender.state {
+        case .Began, .Possible:
+            break
+        case .Changed:
+            updateAnimation(forRecognizer: sender)
+        case .Ended, .Failed, .Cancelled:
+            finishAnimation(forRecognizer: sender)
+        }
+    }
+#endif
 }
 
 private extension BoardingNavigationController {
@@ -145,9 +216,13 @@ private extension BoardingNavigationController {
         guard let vc = viewController else {
             return nil
         }
-        guard let index = viewControllersToPresent.index(of: vc) , index > 0 else {
+        guard let index = viewControllersToPresent.index(of: vc) else {
             return nil
         }
+        guard index > 0 else {
+            return nil
+        }
+
         return viewControllersToPresent[(index - 1)]
     }
 
@@ -197,7 +272,7 @@ private extension BoardingNavigationController {
                     return
                 }
                 transitionState = TransitionState(direction: .pop, previousState: viewControllers)
-                popToAndInsertIfNeeded(poppableViewController, animated: true)
+                popToAndInsertIfNeeded(controller: poppableViewController, animated: true)
             }
         }
         interactionController?.update(abs(percent))
@@ -259,9 +334,9 @@ private extension BoardingNavigationController {
         }
     }
 
-    func configure(_ gestureRecognizer: UIGestureRecognizer, action: Selector) {
-        gestureRecognizer.addTarget(self, action: action)
-        view.addGestureRecognizer(gestureRecognizer)
+    func configure(gestureRecognizer recognizer: UIGestureRecognizer, action: Selector) {
+        recognizer.addTarget(self, action: action)
+        view.addGestureRecognizer(recognizer)
     }
 
 }

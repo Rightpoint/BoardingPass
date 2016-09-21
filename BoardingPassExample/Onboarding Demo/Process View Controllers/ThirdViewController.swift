@@ -31,11 +31,7 @@ extension ThirdViewController: BackgroundColorProvider {
     }
 
     var currentProgress: Progress {
-//        return Progress(parent: 3, userInfo: 4)
-        let progress = Progress(totalUnitCount: 4)
-        progress.completedUnitCount = 3
-        return progress
-
+        return Progress(completedUnitCount: 3, totalUnitCount: 4)
     }
 
 }

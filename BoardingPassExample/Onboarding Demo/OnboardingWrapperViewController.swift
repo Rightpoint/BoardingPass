@@ -41,7 +41,7 @@ class OnboardingWrapperViewController: BoardingNavigationController {
     // We're creating a non-standard progress slider because the UIProgressView
     // has a visual glitch when the animation is cancelled, probably due to
     // CALayer animations
-    fileprivate let progressSlider = UIView()
+    let progressSlider = UIView()
     var progress = Progress() {
         didSet {
             let progressAmount = CGFloat(progress.fractionCompleted)

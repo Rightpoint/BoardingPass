@@ -19,8 +19,14 @@ public protocol BoardingInformation {
 
 }
 
-public typealias AnimationFactory = (_ container: UIViewController?, _ animated: Bool) -> (() -> ())
-public typealias ContextualAnimation = (_ context: UIViewControllerTransitionCoordinatorContext) -> ()
+#if swift(>=3.0)
+    public typealias AnimationFactory = (_ container: UIViewController?, _ animated: Bool) -> (() -> ())
+    public typealias ContextualAnimation = (_ context: UIViewControllerTransitionCoordinatorContext) -> ()
+#else
+    public typealias AnimationFactory = (UIViewController?, Bool) -> (() -> ())
+    public typealias ContextualAnimation = (UIViewControllerTransitionCoordinatorContext) -> ()
+#endif
+
 
 public extension UIViewController {
 
@@ -54,8 +60,8 @@ public extension UIViewController {
             coordinator.animateAlongsideTransition(in: parent?.view, animation: animationInContext, completion: completionInContext)
         }
         else {
-            animation?(parent, false)()
-            completion?(parent, false)()
+            animation?(parentController, false)()
+            completion?(parentController, false)()
         }
     }
 }

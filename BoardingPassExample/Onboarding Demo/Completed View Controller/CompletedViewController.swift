@@ -39,11 +39,8 @@ extension CompletedViewController: BackgroundColorProvider {
     }
 
     var currentProgress: Progress {
-//        return Progress(parent: Progress4, userInfo: 4)
-        let progress = Progress(totalUnitCount: 4)
-        progress.completedUnitCount = 4
-        return progress
-    }
+        return Progress(completedUnitCount: 4, totalUnitCount: 4)
+   }
 
 }
 
@@ -52,6 +49,6 @@ private extension CompletedViewController {
         guard let origin = navigationController?.viewControllers.first else {
             return
         }
-        navigationController?.popToViewController(origin, animated: true)
+        _ = navigationController?.popToViewController(origin, animated: true)
     }
 }

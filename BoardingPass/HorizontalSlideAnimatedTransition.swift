@@ -16,6 +16,8 @@ public class HorizontalSlideAnimatedTransiton: NSObject {
 
     let slideType: TransitionType
 
+    #if swift(>=3.0)
+
     /**
      Initializes a HorizontalSlideAnimatedTransiton for handling a pan gesture on a UINavigationController
 
@@ -30,6 +32,23 @@ public class HorizontalSlideAnimatedTransiton: NSObject {
         }
         super.init()
     }
+    #else
+
+    /**
+     Initializes a HorizontalSlideAnimatedTransiton for handling a pan gesture on a UINavigationController
+
+     - parameter navigationOperation: The the navigation operation bieng animated
+     */
+    public init(navigationOperation: UINavigationControllerOperation) {
+        switch  navigationOperation {
+        case .None, .Push:
+            slideType = .push
+        case .Pop:
+            slideType = .pop
+        }
+        super.init()
+    }
+    #endif
 
 }
 
@@ -45,9 +64,9 @@ extension HorizontalSlideAnimatedTransiton: UIViewControllerAnimatedTransitionin
         let width: CGFloat
         switch slideType {
         case .push:
-            width = transitionContext.containerView.frame.width ?? 0
+            width = transitionContext.containerView.frame.width
         case .pop:
-            width = -(transitionContext.containerView.frame.width ?? 0)
+            width = -(transitionContext.containerView.frame.width)
         }
         presented.view.transform = CGAffineTransform(translationX: width, y: 0)
         let animations = {
@@ -71,11 +90,4 @@ extension HorizontalSlideAnimatedTransiton: UIViewControllerAnimatedTransitionin
     public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.4
     }
-}
-
-extension HorizontalSlideAnimatedTransiton: UIViewControllerInteractiveTransitioning {
-
-    public func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning) {
-    }
-
 }
