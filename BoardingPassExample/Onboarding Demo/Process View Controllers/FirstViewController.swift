@@ -18,7 +18,7 @@ class FirstViewController: ActionableViewController {
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        performAlongsideCurrentCoordinator(animation)
+        performCoordinatedAnimations(animation)
     }
 
 }
