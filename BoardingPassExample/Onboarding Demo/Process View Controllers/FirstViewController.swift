@@ -20,7 +20,6 @@ class FirstViewController: ActionableViewController {
         super.viewWillAppear(animated)
         perform(coordinatedAnimations: animation)
     }
-
 }
 
 extension FirstViewController: BackgroundColorProvider {

@@ -20,8 +20,6 @@ class SecondViewController: ActionableViewController {
         super.viewWillAppear(animated)
         perform(coordinatedAnimations: animation)
     }
-
-
 }
 
 extension SecondViewController: BackgroundColorProvider {

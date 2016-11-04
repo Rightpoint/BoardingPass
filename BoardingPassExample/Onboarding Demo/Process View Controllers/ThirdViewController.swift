@@ -20,8 +20,6 @@ class ThirdViewController: ActionableViewController {
         super.viewWillAppear(animated)
         perform(coordinatedAnimations: animation)
     }
-
-
 }
 
 extension ThirdViewController: BackgroundColorProvider {
