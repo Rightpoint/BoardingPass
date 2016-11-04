@@ -93,7 +93,7 @@ private  extension UINavigationController {
         guard index > 0 else {
             return nil
         }
-        return viewControllers[(index - 1)]
+        return viewControllers[index.advanced(by: -1)]
     }
 
 }

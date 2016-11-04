@@ -150,7 +150,7 @@ public extension BoardingNavigationController {
      if you do not want the transition to be animated.
      */
     public func pushToNextViewController(animated isAnimated: Bool) {
-        if let pushableViewController = topViewController.flatMap({ boardingInfo(afterController: $0) }) {
+        if let pushableViewController = topViewController.flatMap(boardingInfo(afterController:)) {
             pushViewController(pushableViewController, animated: isAnimated)
         }
     }
@@ -162,8 +162,8 @@ public extension BoardingNavigationController {
      if you do not want the transition to be animated.
      */
     public func popToPreviousViewController(animated: Bool) {
-        if let poppableViewController = topViewController.flatMap({ boardingInfo(afterController: $0) }) {
-            popToAndInsertIfNeeded(controller: poppableViewController, animated: animated)
+        if let poppableViewController = topViewController.flatMap(boardingInfo(afterController:)) {
+            popToAndInsertIfNeeded(poppableViewController, animated: animated)
         }
     }
 }
@@ -172,7 +172,7 @@ public extension BoardingNavigationController {
 
 // MARK: Actions
 private extension BoardingNavigationController {
-    func popToAndInsertIfNeeded(controller viewController: UIViewController, animated: Bool) {
+    func popToAndInsertIfNeeded(_ viewController: UIViewController, animated: Bool) {
         if !viewControllers.contains(viewController) {
             if viewControllers.count > 1 {
                 viewControllers.insert(viewController,
@@ -212,7 +212,7 @@ private extension BoardingNavigationController {
 
 private extension BoardingNavigationController {
 
-    func viewController(beforeController viewController: UIViewController?) -> UIViewController? {
+    func viewController(before viewController: UIViewController?) -> UIViewController? {
         guard let vc = viewController else {
             return nil
         }
@@ -226,7 +226,7 @@ private extension BoardingNavigationController {
         return viewControllersToPresent[(index - 1)]
     }
 
-    func viewController(afterController viewController: UIViewController?) -> UIViewController? {
+    func viewController(after viewController: UIViewController?) -> UIViewController? {
         guard let vc = viewController else {
             return nil
         }
@@ -261,18 +261,18 @@ private extension BoardingNavigationController {
         // The transitioning delegate being nil tells us that there isn't another active transition in play
         if transitionState.direction == .none && transitioningDelegate == nil {
             if xTranslation < 0 {
-                guard let pushableViewControler = topViewController.flatMap({ boardingInfo(afterController: $0) }) else {
+                guard let pushableViewControler = topViewController.flatMap(boardingInfo(afterController:)) else {
                     return
                 }
                 transitionState = TransitionState(direction: .push, previousState: viewControllers)
                 pushViewController(pushableViewControler, animated: true)
             }
             else if xTranslation > 0 {
-                guard let poppableViewController = topViewController.flatMap({ boardingInfo(beforeController: $0) }) else {
+                guard let poppableViewController = topViewController.flatMap(boardingInfo(beforeController:)) else {
                     return
                 }
                 transitionState = TransitionState(direction: .pop, previousState: viewControllers)
-                popToAndInsertIfNeeded(controller: poppableViewController, animated: true)
+                popToAndInsertIfNeeded(poppableViewController, animated: true)
             }
         }
         interactionController?.update(abs(percent))
@@ -284,7 +284,7 @@ private extension BoardingNavigationController {
             poppableViewController = boardingViewController.previousViewController
         }
         else {
-            poppableViewController = self.viewController(beforeController: viewController)
+            poppableViewController = self.viewController(before: viewController)
         }
         return poppableViewController
     }
@@ -295,7 +295,7 @@ private extension BoardingNavigationController {
             pushableViewControler = boardingViewController.nextViewController
         }
         else {
-            pushableViewControler = self.viewController(afterController: viewController)
+            pushableViewControler = self.viewController(after: viewController)
         }
         return pushableViewControler
     }
