@@ -129,7 +129,7 @@ import UIKit
     struct DispatchQueue {
         @nonobjc static var main = DispatchQueue()
         func async(work: () -> Swift.Void) {
-            dispatch_async(dispatch_get_main_queue(), { 
+            dispatch_async(dispatch_get_main_queue(), {
                 work()
             })
         }

@@ -15,7 +15,7 @@ class CompletedViewController: UIViewController {
         super.viewDidLoad()
         navigationItem.hidesBackButton = true
         navigationItem.title = NSLocalizedString("Completed", comment: "completed onboarding title")
-        let resetButton = UIButton(title: NSLocalizedString("Reset", comment: "Reset button title"), font: OnboardingFont)
+        let resetButton = UIButton(title: NSLocalizedString("Reset", comment: "Reset button title"), font: Font.onboardingFont)
         resetButton.addTarget(self, action: #selector(handleResetTapped), for: .touchUpInside)
         view.addSubview(resetButton)
         let constraints: [NSLayoutConstraint] = [

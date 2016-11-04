@@ -8,6 +8,10 @@
 
 import BoardingPass
 
+struct Font {
+    static let onboardingFont: UIFont = UIFont.systemFont(ofSize: 26.0)
+}
+
 protocol BackgroundColorProvider {
     var backgroundColor: UIColor { get }
     var currentProgress: Progress { get }
@@ -69,5 +73,3 @@ class OnboardingWrapperViewController: BoardingNavigationController {
     }
 
 }
-
-let OnboardingFont: UIFont = UIFont.systemFont(ofSize: 26.0)
