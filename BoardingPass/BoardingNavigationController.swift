@@ -161,9 +161,9 @@ public extension BoardingNavigationController {
      - parameter animated: Specify true to animate the transition or false
      if you do not want the transition to be animated.
      */
-    public func popToPreviousViewController(animated: Bool) {
+    public func popToPreviousViewController(animated isAnimated: Bool) {
         if let poppableViewController = topViewController.flatMap(boardingInfo(afterController:)) {
-            popToAndInsertIfNeeded(poppableViewController, animated: animated)
+            popToAndInsertIfNeeded(poppableViewController, animated: isAnimated)
         }
     }
 }
