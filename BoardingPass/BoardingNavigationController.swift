@@ -33,36 +33,36 @@ struct TransitionState {
 
 #if swift(>=3.0)
 
-open class BoardingNavigationController: UINavigationController {
+    open class BoardingNavigationController: UINavigationController {
 
-    let panGestureRecognizer = UIPanGestureRecognizer()
-    var transitionState = TransitionState()
-    var interactionController: UIPercentDrivenInteractiveTransition?
+        let panGestureRecognizer = UIPanGestureRecognizer()
+        var transitionState = TransitionState()
+        var interactionController: UIPercentDrivenInteractiveTransition?
 
-    /// An array of view controllers used to determine the next or previous view
-    /// controller to present in the series. These are ignored if the top view
-    /// controller conforms to `BoardingInformation`
-    public var viewControllersToPresent: [UIViewController] = []
+        /// An array of view controllers used to determine the next or previous view
+        /// controller to present in the series. These are ignored if the top view
+        /// controller conforms to `BoardingInformation`
+        public var viewControllersToPresent: [UIViewController] = []
 
-    /**
-     An optional closure that takes a `UINavigationControllerOperation` and returns a
-     `UIViewControllerAnimatedTransitioning` object. Used to allow customization of
-     the animation. The default value is `HorizontalSlideAnimatedTransiton.init`.
-     Setting this value to `nil` will default to the standard navigation controller
-     animation.
-     */
-    public var animatedTransitioningProvider: ((UINavigationControllerOperation) -> UIViewControllerAnimatedTransitioning)? = HorizontalSlideAnimatedTransiton.init
+        /**
+         An optional closure that takes a `UINavigationControllerOperation` and returns a
+         `UIViewControllerAnimatedTransitioning` object. Used to allow customization of
+         the animation. The default value is `HorizontalSlideAnimatedTransiton.init`.
+         Setting this value to `nil` will default to the standard navigation controller
+         animation.
+         */
+        public var animatedTransitioningProvider: ((UINavigationControllerOperation) -> UIViewControllerAnimatedTransitioning)? = HorizontalSlideAnimatedTransiton.init
 
-    open override func viewDidLoad() {
-        super.viewDidLoad()
-        delegate = self
-        configure(gestureRecognizer: panGestureRecognizer, action: #selector(handlePan))
+        open override func viewDidLoad() {
+            super.viewDidLoad()
+            delegate = self
+            configure(gestureRecognizer: panGestureRecognizer, action: #selector(handlePan))
+        }
     }
-}
 
 #else
 
-public class BoardingNavigationController: UINavigationController {
+    public class BoardingNavigationController: UINavigationController {
 
     let panGestureRecognizer = UIPanGestureRecognizer()
     var transitionState = TransitionState()
@@ -83,11 +83,11 @@ public class BoardingNavigationController: UINavigationController {
     public var animatedTransitioningProvider: ((UINavigationControllerOperation) -> UIViewControllerAnimatedTransitioning)? = HorizontalSlideAnimatedTransiton.init
 
     public override func viewDidLoad() {
-        super.viewDidLoad()
-        delegate = self
-        configure(gestureRecognizer: panGestureRecognizer, action: #selector(handlePan))
+    super.viewDidLoad()
+    delegate = self
+    configure(gestureRecognizer: panGestureRecognizer, action: #selector(handlePan))
     }
-}
+    }
 
 #endif
 
@@ -95,32 +95,31 @@ public class BoardingNavigationController: UINavigationController {
 
 #if swift(>=3.0)
 
-extension BoardingNavigationController: UINavigationControllerDelegate {
+    extension BoardingNavigationController: UINavigationControllerDelegate {
 
-    public func navigationController(_ navigationController: UINavigationController,
-                                     animationControllerFor operation: UINavigationControllerOperation,
-                                     from fromVC: UIViewController,
-                                     to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return animatedTransitioningProvider?(operation)
+        public func navigationController(_ navigationController: UINavigationController,
+                                         animationControllerFor operation: UINavigationControllerOperation,
+                                         from fromVC: UIViewController,
+                                         to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+            return animatedTransitioningProvider?(operation)
+        }
+
+        public func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+            return interactionController
+        }
     }
-
-    public func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        return interactionController
-    }
-}
-
 
 #else
 
-extension BoardingNavigationController: UINavigationControllerDelegate {
+    extension BoardingNavigationController: UINavigationControllerDelegate {
     public func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return animatedTransitioningProvider?(operation)
+    return animatedTransitioningProvider?(operation)
     }
 
     public func navigationController(navigationController: UINavigationController, interactionControllerForAnimationController animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        return interactionController
+    return interactionController
     }
-}
+    }
 
 #endif
 
@@ -172,6 +171,8 @@ public extension BoardingNavigationController {
 
 // MARK: Actions
 private extension BoardingNavigationController {
+
+    #if swift(>=3.0)
     func popToAndInsertIfNeeded(_ viewController: UIViewController, animated: Bool) {
         if !viewControllers.contains(viewController) {
             if viewControllers.count > 1 {
@@ -184,8 +185,22 @@ private extension BoardingNavigationController {
         }
         popToViewController(viewController, animated: animated)
     }
+    #else
+    func popToAndInsertIfNeeded(viewController: UIViewController, animated: Bool) {
+    if !viewControllers.contains(viewController) {
+    if viewControllers.count > 1 {
+    viewControllers.insert(viewController,
+    at: ((viewControllers.endIndex - 1) - 1))
+    }
+    else {
+    viewControllers.insert(viewController, at: viewControllers.startIndex)
+    }
+    }
+    popToViewController(viewController, animated: animated)
+    }
+    #endif
 
-#if swift(>=3.0)
+    #if swift(>=3.0)
     @objc func handlePan(from sender: UIPanGestureRecognizer) {
         switch sender.state {
         case .began, .possible:
@@ -196,18 +211,18 @@ private extension BoardingNavigationController {
             finishAnimation(forRecognizer: sender)
         }
     }
-#else
+    #else
     @objc func handlePan(from sender: UIPanGestureRecognizer) {
-        switch sender.state {
-        case .Began, .Possible:
-            break
-        case .Changed:
-            updateAnimation(forRecognizer: sender)
-        case .Ended, .Failed, .Cancelled:
-            finishAnimation(forRecognizer: sender)
-        }
+    switch sender.state {
+    case .Began, .Possible:
+    break
+    case .Changed:
+    updateAnimation(forRecognizer: sender)
+    case .Ended, .Failed, .Cancelled:
+    finishAnimation(forRecognizer: sender)
     }
-#endif
+    }
+    #endif
 }
 
 private extension BoardingNavigationController {
@@ -338,14 +353,14 @@ private extension BoardingNavigationController {
         recognizer.addTarget(self, action: action)
         view.addGestureRecognizer(recognizer)
     }
-
+    
 }
 
 private extension UISwipeGestureRecognizer {
-
+    
     convenience init(direction: UISwipeGestureRecognizerDirection) {
         self.init()
         self.direction = direction
     }
-
+    
 }

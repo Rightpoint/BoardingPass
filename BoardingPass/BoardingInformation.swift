@@ -27,7 +27,6 @@ public protocol BoardingInformation {
     public typealias ContextualAnimation = (UIViewControllerTransitionCoordinatorContext) -> ()
 #endif
 
-
 public extension UIViewController {
 
     /**
@@ -93,7 +92,11 @@ private  extension UINavigationController {
         guard index > 0 else {
             return nil
         }
-        return viewControllers[index.advanced(by: -1)]
+        #if swift(>=3.0)
+            return viewControllers[index.advanced(by: -1)]
+        #else
+            return viewControllers[index.predecessor()]
+        #endif
     }
 
 }
