@@ -16,26 +16,25 @@ class FirstViewController: ActionableViewController {
         navigationItem.title = NSLocalizedString("First", comment: "First View controller title")
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        performCoordinatedAnimations(animation)
+        perform(coordinatedAnimations: animation)
     }
-
 }
 
 extension FirstViewController: BackgroundColorProvider {
 
     var backgroundColor: UIColor {
-        return .darkGrayColor()
+        return .darkGray
     }
 
-    var currentProgress: NSProgress {
-        return NSProgress(completedUnitCount: 1, totalUnitCount: 4)
+    var currentProgress: Progress {
+        return Progress(completedUnitCount: 1, totalUnitCount: 4)
     }
 
 }
 
-extension NSProgress {
+extension Progress {
     convenience init(completedUnitCount: Int64, totalUnitCount: Int64) {
         self.init(totalUnitCount: totalUnitCount)
         self.completedUnitCount = completedUnitCount
@@ -45,8 +44,8 @@ extension NSProgress {
 extension UIButton {
 
     convenience init(title: String, font: UIFont) {
-        self.init(type:.System)
-        setTitle(title, forState: .Normal)
+        self.init(type:.system)
+        setTitle(title, for: UIControlState())
         titleLabel?.font = font
     }
 
@@ -54,10 +53,10 @@ extension UIButton {
 
 extension UIBarButtonItem {
     static var backButton: UIBarButtonItem {
-         return UIBarButtonItem(title: NSLocalizedString("Back", comment: "generic back button title"), style: .Plain, target: nil, action: nil)
+         return UIBarButtonItem(title: NSLocalizedString("Back", comment: "generic back button title"), style: .plain, target: nil, action: nil)
     }
 
     static var skipButton: UIBarButtonItem {
-        return UIBarButtonItem(title: NSLocalizedString("Skip", comment: "generic skip button title"), style: .Plain, target: nil, action: nil)
+        return UIBarButtonItem(title: NSLocalizedString("Skip", comment: "generic skip button title"), style: .plain, target: nil, action: nil)
     }
 }

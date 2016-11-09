@@ -10,11 +10,29 @@ import UIKit
 
 public class HorizontalSlideAnimatedTransiton: NSObject {
 
-    private enum TransitionType {
-        case Push, Pop
+    enum TransitionType {
+        case push, pop
     }
 
-    private let slideType: TransitionType
+    let slideType: TransitionType
+
+    #if swift(>=3.0)
+
+    /**
+     Initializes a HorizontalSlideAnimatedTransiton for handling a pan gesture on a UINavigationController
+
+     - parameter navigationOperation: The the navigation operation bieng animated
+     */
+    public init(navigationOperation: UINavigationControllerOperation) {
+        switch  navigationOperation {
+        case .none, .push:
+            slideType = .push
+        case .pop:
+            slideType = .pop
+        }
+        super.init()
+    }
+    #else
 
     /**
      Initializes a HorizontalSlideAnimatedTransiton for handling a pan gesture on a UINavigationController
@@ -24,58 +42,57 @@ public class HorizontalSlideAnimatedTransiton: NSObject {
     public init(navigationOperation: UINavigationControllerOperation) {
         switch  navigationOperation {
         case .None, .Push:
-            slideType = .Push
+            slideType = .push
         case .Pop:
-            slideType = .Pop
+            slideType = .pop
         }
         super.init()
     }
+    #endif
 
 }
 
 extension HorizontalSlideAnimatedTransiton: UIViewControllerAnimatedTransitioning {
 
-    public func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        guard let presented = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey),
-            presenting = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey) else {
-            transitionContext.completeTransition(false)
-            return
+    public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+
+        guard let presented = transitionContext.viewController(forKey: UITransitionContextToViewControllerKey),
+            let presenting = transitionContext.viewController(forKey: UITransitionContextFromViewControllerKey) else {
+                transitionContext.completeTransition(false)
+                return
         }
-        transitionContext.containerView()?.addSubview(presented.view)
+
+        // Optional for backward compatibility
+        let container: UIView? = transitionContext.containerView
+
+        container?.addSubview(presented.view)
         let width: CGFloat
         switch slideType {
-        case .Push:
-            width = transitionContext.containerView()?.frame.width ?? 0
-        case .Pop:
-            width = -(transitionContext.containerView()?.frame.width ?? 0)
+        case .push:
+            width = container?.frame.width ?? 0
+        case .pop:
+            width = -(container?.frame.width ?? 0)
         }
-        presented.view.transform = CGAffineTransformMakeTranslation(width, 0)
+        presented.view.transform = CGAffineTransform(translationX: width, y: 0)
         let animations = {
-            presenting.view.transform = CGAffineTransformMakeTranslation(-width, 0)
-            presented.view.transform = CGAffineTransformIdentity
+            presenting.view.transform = CGAffineTransform(translationX: -width, y: 0)
+            presented.view.transform = CGAffineTransform.identity
         }
         let completion = { (completed: Bool) in
             if completed {
-                presented.view.transform = CGAffineTransformIdentity
+                presented.view.transform = CGAffineTransform.identity
             }
             else {
-                presenting.view.transform = CGAffineTransformIdentity
+                presenting.view.transform = CGAffineTransform.identity
             }
             transitionContext.completeTransition(completed)
         }
-        UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0.0,
-                                   options: [.BeginFromCurrentState],
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0.0,
+                                   options: [.beginFromCurrentState],
                                    animations: animations, completion: completion)
     }
 
-    public func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.4
     }
-}
-
-extension HorizontalSlideAnimatedTransiton: UIViewControllerInteractiveTransitioning {
-
-    public func startInteractiveTransition(transitionContext: UIViewControllerContextTransitioning) {
-    }
-
 }
