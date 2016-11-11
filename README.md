@@ -1,5 +1,6 @@
 # BoardingPass
 
+[![Build Status](https://travis-ci.org/Raizlabs/BoardingPass.svg?branch=develop)](https://travis-ci.org/Raizlabs/BoardingPass)
 [![Version](https://img.shields.io/cocoapods/v/BoardingPass.svg?style=flat)](http://cocoapods.org/pods/BoardingPass)
 [![License](https://img.shields.io/cocoapods/l/BoardingPass.svg?style=flat)](http://cocoapods.org/pods/BoardingPass)
 [![Platform](https://img.shields.io/cocoapods/p/BoardingPass.svg?style=flat)](http://cocoapods.org/pods/BoardingPass)
