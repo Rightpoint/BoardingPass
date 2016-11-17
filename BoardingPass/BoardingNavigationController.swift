@@ -353,14 +353,11 @@ private extension BoardingNavigationController {
         recognizer.addTarget(self, action: action)
         view.addGestureRecognizer(recognizer)
     }
-    
 }
 
 private extension UISwipeGestureRecognizer {
-    
     convenience init(direction: UISwipeGestureRecognizerDirection) {
         self.init()
         self.direction = direction
     }
-    
 }
