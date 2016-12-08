@@ -245,6 +245,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 72BE8D6E1D3EC55E005720FB /* Build configuration list for PBXNativeTarget "BoardingPass" */;
 			buildPhases = (
+				720EF3761DF9D136007A5E10 /* Swiftlint */,
 				72BE8D611D3EC55E005720FB /* Sources */,
 				72BE8D621D3EC55E005720FB /* Frameworks */,
 				72BE8D631D3EC55E005720FB /* Headers */,
@@ -266,7 +267,6 @@
 				72BE8D711D3FBC05005720FB /* Sources */,
 				72BE8D721D3FBC05005720FB /* Frameworks */,
 				72BE8D731D3FBC05005720FB /* Resources */,
-				7264CA1C1D3FBFDA00033FC4 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -285,7 +285,6 @@
 				72BE8D801D3FBCDE005720FB /* Sources */,
 				72BE8D811D3FBCDE005720FB /* Frameworks */,
 				72BE8D821D3FBCDE005720FB /* Resources */,
-				7264CA1F1D3FC29700033FC4 /* SwiftLint */,
 				7264CA2A1D3FC54A00033FC4 /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -369,33 +368,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7264CA1C1D3FBFDA00033FC4 /* SwiftLint */ = {
+		720EF3761DF9D136007A5E10 /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = SwiftLint;
+			name = Swiftlint;
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
-		};
-		7264CA1F1D3FC29700033FC4 /* SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = SwiftLint;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint || echo \"warning: SwiftLint failed with exit code $?. Is SwiftLint installed and up to date?\"\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint || echo \"warning: SwiftLint failed with exit code $?. Is SwiftLint installed and up to date?\"\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
