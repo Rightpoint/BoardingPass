@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		23A09E271D908D05004A9ADF /* BoardingPassCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A09E261D908D05004A9ADF /* BoardingPassCompatibility.swift */; };
-		23CF41E41D91ED70005CD47C /* DemoCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CF41E31D91ED70005CD47C /* DemoCompatibility.swift */; };
 		7264CA211D3FC4AB00033FC4 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264CA201D3FC4AB00033FC4 /* FirstViewController.swift */; };
 		7264CA231D3FC4B300033FC4 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264CA221D3FC4B300033FC4 /* SecondViewController.swift */; };
 		7264CA251D3FC4B900033FC4 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264CA241D3FC4B900033FC4 /* ThirdViewController.swift */; };
@@ -61,7 +60,6 @@
 
 /* Begin PBXFileReference section */
 		23A09E261D908D05004A9ADF /* BoardingPassCompatibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardingPassCompatibility.swift; sourceTree = "<group>"; };
-		23CF41E31D91ED70005CD47C /* DemoCompatibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoCompatibility.swift; sourceTree = "<group>"; };
 		7264CA201D3FC4AB00033FC4 /* FirstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		7264CA221D3FC4B300033FC4 /* SecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		7264CA241D3FC4B900033FC4 /* ThirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
@@ -222,7 +220,6 @@
 				7264CA311D3FEC4000033FC4 /* Completed View Controller */,
 				7264CA301D3FEC2A00033FC4 /* Process View Controllers */,
 				72BE8D881D3FBCDE005720FB /* OnboardingWrapperViewController.swift */,
-				23CF41E31D91ED70005CD47C /* DemoCompatibility.swift */,
 			);
 			path = "Onboarding Demo";
 			sourceTree = "<group>";
@@ -409,7 +406,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				72F163451D4910D1007D983B /* ActionableViewController.swift in Sources */,
-				23CF41E41D91ED70005CD47C /* DemoCompatibility.swift in Sources */,
 				7264CA331D3FEC4C00033FC4 /* CompletedViewController.swift in Sources */,
 				7264CA231D3FC4B300033FC4 /* SecondViewController.swift in Sources */,
 				7264CA211D3FC4AB00033FC4 /* FirstViewController.swift in Sources */,

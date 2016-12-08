@@ -19,11 +19,11 @@ protocol BackgroundColorProvider {
 
 public extension UIViewControllerTransitionCoordinatorContext {
     var toViewController: UIViewController? {
-        return viewController(forKey: UITransitionContextToViewControllerKey)
+        return viewController(forKey: UITransitionContextViewControllerKey.to)
     }
 
     var fromViewController: UIViewController? {
-        return viewController(forKey: UITransitionContextFromViewControllerKey)
+        return viewController(forKey: UITransitionContextViewControllerKey.from)
     }
 }
 
