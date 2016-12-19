@@ -42,7 +42,7 @@ struct TransitionState {
         /// An array of view controllers used to determine the next or previous view
         /// controller to present in the series. These are ignored if the top view
         /// controller conforms to `BoardingInformation`
-        public var viewControllersToPresent: [UIViewController] = []
+        open var viewControllersToPresent: [UIViewController] = []
 
         /**
          An optional closure that takes a `UINavigationControllerOperation` and returns a
@@ -51,7 +51,7 @@ struct TransitionState {
          Setting this value to `nil` will default to the standard navigation controller
          animation.
          */
-        public var animatedTransitioningProvider: ((UINavigationControllerOperation) -> UIViewControllerAnimatedTransitioning)? = HorizontalSlideAnimatedTransiton.init
+        open var animatedTransitioningProvider: ((UINavigationControllerOperation) -> UIViewControllerAnimatedTransitioning)? = HorizontalSlideAnimatedTransiton.init
 
         open override func viewDidLoad() {
             super.viewDidLoad()
