@@ -11,11 +11,13 @@ import BoardingPass
 
 class CompletedViewController: UIViewController {
 
+    weak var onboardingDelegate: OnboardingViewControllerDelegate?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.hidesBackButton = true
         navigationItem.title = NSLocalizedString("Completed", comment: "completed onboarding title")
-        let resetButton = UIButton(title: NSLocalizedString("Reset", comment: "Reset button title"), font: Font.onboardingFont)
+        let resetButton = UIButton(title: NSLocalizedString("Reset", comment: "Reset button title"), font: .onboardingFont)
         resetButton.addTarget(self, action: #selector(handleResetTapped), for: .touchUpInside)
         view.addSubview(resetButton)
         let constraints: [NSLayoutConstraint] = [
@@ -28,7 +30,10 @@ class CompletedViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        perform(coordinatedAnimations: animation)
+        let factory: AnimationFactory = { [unowned self]  (_, _) in
+            return self.animation
+        }
+        perform(coordinatedAnimations: factory)
     }
 }
 

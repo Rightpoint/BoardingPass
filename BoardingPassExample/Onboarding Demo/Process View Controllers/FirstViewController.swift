@@ -16,10 +16,6 @@ class FirstViewController: ActionableViewController {
         navigationItem.title = NSLocalizedString("First", comment: "First View controller title")
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        perform(coordinatedAnimations: animation)
-    }
 }
 
 extension FirstViewController: BackgroundColorProvider {

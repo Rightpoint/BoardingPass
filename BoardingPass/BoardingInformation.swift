@@ -20,11 +20,11 @@ public protocol BoardingInformation {
 }
 
 #if swift(>=3.0)
-    public typealias AnimationFactory = (_ container: UIViewController?, _ animated: Bool) -> (() -> ())
-    public typealias ContextualAnimation = (_ context: UIViewControllerTransitionCoordinatorContext) -> ()
+    public typealias AnimationFactory = (_ container: UIViewController?, _ animated: Bool) -> (() -> Void)
+    public typealias ContextualAnimation = (_ context: UIViewControllerTransitionCoordinatorContext) -> Void
 #else
-    public typealias AnimationFactory = (UIViewController?, Bool) -> (() -> ())
-    public typealias ContextualAnimation = (UIViewControllerTransitionCoordinatorContext) -> ()
+    public typealias AnimationFactory = (UIViewController?, Bool) -> (() -> Void)
+    public typealias ContextualAnimation = (UIViewControllerTransitionCoordinatorContext) -> Void
 #endif
 
 public extension UIViewController {
