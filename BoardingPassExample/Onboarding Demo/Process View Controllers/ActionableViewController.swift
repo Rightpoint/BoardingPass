@@ -11,12 +11,14 @@ import BoardingPass
 
 class ActionableViewController: UIViewController {
 
+    weak var onboardingDelegate: OnboardingViewControllerDelegate?
+
     override func viewDidLoad() {
         navigationItem.backBarButtonItem = UIBarButtonItem.backButton
         navigationItem.rightBarButtonItem = UIBarButtonItem.skipButton
         navigationItem.rightBarButtonItem?.target = self
         navigationItem.rightBarButtonItem?.action = #selector(handleSkipTapped)
-        let nextButton = UIButton(title: NSLocalizedString("Next", comment: "Next button title"), font: Font.onboardingFont)
+        let nextButton = UIButton(title: NSLocalizedString("Next", comment: "Next button title"), font: .onboardingFont)
         nextButton.addTarget(self, action: #selector(handleNextTapped), for: .touchUpInside)
         view.addSubview(nextButton)
         let constraints: [NSLayoutConstraint] = [
@@ -27,6 +29,19 @@ class ActionableViewController: UIViewController {
         NSLayoutConstraint.activate(constraints)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let factory: AnimationFactory?
+        if let backgroundColorProvider = self as? BackgroundColorProvider {
+            factory = { [unowned backgroundColorProvider] (_, _) in
+                return backgroundColorProvider.animation
+            }
+        }
+        else {
+           factory = nil
+        }
+        perform(coordinatedAnimations: factory)
+    }
 }
 
 private extension ActionableViewController {

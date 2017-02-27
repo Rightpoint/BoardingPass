@@ -1,5 +1,5 @@
 //
-//  OnboardingWrapperViewController.swift
+//  OnboardingNavigationViewController.swift
 //  BoardingPassExample
 //
 //  Created by Michael Skiba on 7/20/16.
@@ -8,41 +8,39 @@
 
 import BoardingPass
 
-struct Font {
+extension UIFont {
     static let onboardingFont: UIFont = UIFont.systemFont(ofSize: 26.0)
 }
 
-protocol BackgroundColorProvider {
+protocol BackgroundColorProvider: class {
+
+    weak var onboardingDelegate: OnboardingViewControllerDelegate? { get set }
     var backgroundColor: UIColor { get }
     var currentProgress: Progress { get }
-}
 
-public extension UIViewControllerTransitionCoordinatorContext {
-    var toViewController: UIViewController? {
-        return viewController(forKey: UITransitionContextToViewControllerKey)
-    }
-
-    var fromViewController: UIViewController? {
-        return viewController(forKey: UITransitionContextFromViewControllerKey)
-    }
 }
 
 extension BackgroundColorProvider {
-    func animation(_ container: UIViewController?, animated: Bool) -> (() -> ()) {
-        let color = backgroundColor
-        let progress = currentProgress
-        let progressViewController = container as? OnboardingWrapperViewController
-        return {
-            progressViewController?.progress = progress
-            container?.view.backgroundColor = color
+
+    var animation: (() -> Void) {
+        return { [unowned self] in
+            self.onboardingDelegate?.backgroundColor = self.backgroundColor
+            self.onboardingDelegate?.progress = self.currentProgress
         }
     }
 
 }
 
-class OnboardingWrapperViewController: BoardingNavigationController {
+protocol OnboardingViewControllerDelegate: class {
 
-    // We're creating a non-standard progress slider because the UIProgressVie
+    var backgroundColor: UIColor? { get set }
+    var progress: Progress { get set }
+
+}
+
+class OnboardingNavigationViewController: BoardingNavigationController, OnboardingViewControllerDelegate {
+
+    // We're creating a non-standard progress slider because the UIProgressView
     // has a visual glitch when the animation is cancelled, probably due to
     // CALayer animations
     let progressSlider = UIView()
@@ -56,9 +54,33 @@ class OnboardingWrapperViewController: BoardingNavigationController {
         }
     }
 
-    static func sampleOnboarding() -> OnboardingWrapperViewController {
-        let onboarding = OnboardingWrapperViewController(viewControllersToPresent: [FirstViewController(), SecondViewController(), ThirdViewController()])
+    var backgroundColor: UIColor? {
+        get {
+            return view.backgroundColor
+        }
+        set {
+            view.backgroundColor = newValue
+        }
+    }
+
+    static func sampleOnboarding() -> BoardingNavigationController {
+        let viewControllers = [
+            FirstViewController(),
+            SecondViewController(),
+            ThirdViewController(),
+            ]
+        let onboarding = OnboardingNavigationViewController(viewControllersToPresent: viewControllers)
         return onboarding
+    }
+
+    func beginOnboarding() {
+        let viewControllers = [UIColor.red, UIColor.green, UIColor.blue].map { color -> UIViewController in
+            let viewController = UIViewController()
+            viewController.view.backgroundColor = color
+            return viewController
+        }
+        let onboarding = BoardingNavigationController(viewControllersToPresent: viewControllers)
+        present(onboarding, animated: true, completion: nil)
     }
 
     override func viewDidLoad() {
@@ -70,6 +92,30 @@ class OnboardingWrapperViewController: BoardingNavigationController {
         progressSlider.frame.origin.y = navigationBar.frame.maxY - progressSlider.frame.height
         progressSlider.backgroundColor = .red
         view.backgroundColor = UIColor.white
+    }
+
+    override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+        super.pushViewController(viewController, animated: animated)
+        (viewController as? BackgroundColorProvider)?.onboardingDelegate = self
+    }
+
+    override func popViewController(animated: Bool) -> UIViewController? {
+        let viewController = super.popViewController(animated: animated)
+        (viewController as? BackgroundColorProvider)?.onboardingDelegate = self
+        return viewController
+    }
+
+    override func popToViewController(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
+        let poppedViewControllers = super.popToViewController(viewController, animated: animated)
+        (viewController as? BackgroundColorProvider)?.onboardingDelegate = self
+        return poppedViewControllers
+    }
+
+    override func setViewControllers(_ viewControllers: [UIViewController], animated: Bool) {
+        super.setViewControllers(viewControllers, animated: animated)
+        for viewController in viewControllers {
+            (viewController as? BackgroundColorProvider)?.onboardingDelegate = self
+        }
     }
 
 }

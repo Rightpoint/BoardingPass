@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		23A09E271D908D05004A9ADF /* BoardingPassCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A09E261D908D05004A9ADF /* BoardingPassCompatibility.swift */; };
-		23CF41E41D91ED70005CD47C /* DemoCompatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CF41E31D91ED70005CD47C /* DemoCompatibility.swift */; };
 		7264CA211D3FC4AB00033FC4 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264CA201D3FC4AB00033FC4 /* FirstViewController.swift */; };
 		7264CA231D3FC4B300033FC4 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264CA221D3FC4B300033FC4 /* SecondViewController.swift */; };
 		7264CA251D3FC4B900033FC4 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7264CA241D3FC4B900033FC4 /* ThirdViewController.swift */; };
@@ -61,7 +60,6 @@
 
 /* Begin PBXFileReference section */
 		23A09E261D908D05004A9ADF /* BoardingPassCompatibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardingPassCompatibility.swift; sourceTree = "<group>"; };
-		23CF41E31D91ED70005CD47C /* DemoCompatibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoCompatibility.swift; sourceTree = "<group>"; };
 		7264CA201D3FC4AB00033FC4 /* FirstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		7264CA221D3FC4B300033FC4 /* SecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		7264CA241D3FC4B900033FC4 /* ThirdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
@@ -222,7 +220,6 @@
 				7264CA311D3FEC4000033FC4 /* Completed View Controller */,
 				7264CA301D3FEC2A00033FC4 /* Process View Controllers */,
 				72BE8D881D3FBCDE005720FB /* OnboardingWrapperViewController.swift */,
-				23CF41E31D91ED70005CD47C /* DemoCompatibility.swift */,
 			);
 			path = "Onboarding Demo";
 			sourceTree = "<group>";
@@ -245,6 +242,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 72BE8D6E1D3EC55E005720FB /* Build configuration list for PBXNativeTarget "BoardingPass" */;
 			buildPhases = (
+				720EF3761DF9D136007A5E10 /* Swiftlint */,
 				72BE8D611D3EC55E005720FB /* Sources */,
 				72BE8D621D3EC55E005720FB /* Frameworks */,
 				72BE8D631D3EC55E005720FB /* Headers */,
@@ -266,7 +264,6 @@
 				72BE8D711D3FBC05005720FB /* Sources */,
 				72BE8D721D3FBC05005720FB /* Frameworks */,
 				72BE8D731D3FBC05005720FB /* Resources */,
-				7264CA1C1D3FBFDA00033FC4 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -285,7 +282,6 @@
 				72BE8D801D3FBCDE005720FB /* Sources */,
 				72BE8D811D3FBCDE005720FB /* Frameworks */,
 				72BE8D821D3FBCDE005720FB /* Resources */,
-				7264CA1F1D3FC29700033FC4 /* SwiftLint */,
 				7264CA2A1D3FC54A00033FC4 /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -369,33 +365,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7264CA1C1D3FBFDA00033FC4 /* SwiftLint */ = {
+		720EF3761DF9D136007A5E10 /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = SwiftLint;
+			name = Swiftlint;
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
-		};
-		7264CA1F1D3FC29700033FC4 /* SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = SwiftLint;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint || echo \"warning: SwiftLint failed with exit code $?. Is SwiftLint installed and up to date?\"\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint || echo \"warning: SwiftLint failed with exit code $?. Is SwiftLint installed and up to date?\"\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -424,7 +406,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				72F163451D4910D1007D983B /* ActionableViewController.swift in Sources */,
-				23CF41E41D91ED70005CD47C /* DemoCompatibility.swift in Sources */,
 				7264CA331D3FEC4C00033FC4 /* CompletedViewController.swift in Sources */,
 				7264CA231D3FC4B300033FC4 /* SecondViewController.swift in Sources */,
 				7264CA211D3FC4AB00033FC4 /* FirstViewController.swift in Sources */,

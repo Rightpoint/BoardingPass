@@ -16,10 +16,6 @@ class ThirdViewController: ActionableViewController {
         navigationItem.title = NSLocalizedString("Third", comment: "Third View controller title")
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        perform(coordinatedAnimations: animation)
-    }
 }
 
 extension ThirdViewController: BackgroundColorProvider {
