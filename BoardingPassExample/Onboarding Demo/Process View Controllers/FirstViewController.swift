@@ -16,18 +16,10 @@ class FirstViewController: ActionableViewController {
         navigationItem.title = NSLocalizedString("First", comment: "First View controller title")
     }
 
-}
-
-extension FirstViewController: BackgroundColorProvider {
-
-    var backgroundColor: UIColor {
-        return .darkGray
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        animate(color: .darkGray)
     }
-
-    var currentProgress: Progress {
-        return Progress(completedUnitCount: 1, totalUnitCount: 4)
-    }
-
 }
 
 extension Progress {
@@ -54,5 +46,15 @@ extension UIBarButtonItem {
 
     static var skipButton: UIBarButtonItem {
         return UIBarButtonItem(title: NSLocalizedString("Skip", comment: "generic skip button title"), style: .plain, target: nil, action: nil)
+    }
+}
+
+extension UIViewController {
+    func animate(color: UIColor) {
+        perform(coordinatedAnimations: { (vc, _) -> (() -> Void) in
+            return {
+                vc?.view.backgroundColor = color
+            }
+        })
     }
 }

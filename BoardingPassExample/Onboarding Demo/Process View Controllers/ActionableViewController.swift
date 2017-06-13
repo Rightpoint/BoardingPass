@@ -9,17 +9,20 @@
 import UIKit
 import BoardingPass
 
-class ActionableViewController: UIViewController {
+@objc protocol Actions: NSObjectProtocol {
+    func handleNextTapped(_ sender: UIResponder)
+    func handleSkipTapped(_ sender: UIResponder)
+}
 
-    weak var onboardingDelegate: OnboardingViewControllerDelegate?
+class ActionableViewController: UIViewController {
 
     override func viewDidLoad() {
         navigationItem.backBarButtonItem = UIBarButtonItem.backButton
         navigationItem.rightBarButtonItem = UIBarButtonItem.skipButton
-        navigationItem.rightBarButtonItem?.target = self
-        navigationItem.rightBarButtonItem?.action = #selector(handleSkipTapped)
+        navigationItem.rightBarButtonItem?.target = nil
+        navigationItem.rightBarButtonItem?.action = #selector(Actions.handleSkipTapped)
         let nextButton = UIButton(title: NSLocalizedString("Next", comment: "Next button title"), font: .onboardingFont)
-        nextButton.addTarget(self, action: #selector(handleNextTapped), for: .touchUpInside)
+        nextButton.addTarget(nil, action: #selector(Actions.handleNextTapped), for: .touchUpInside)
         view.addSubview(nextButton)
         let constraints: [NSLayoutConstraint] = [
             nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -27,29 +30,5 @@ class ActionableViewController: UIViewController {
             ]
         nextButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate(constraints)
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        let factory: AnimationFactory?
-        if let backgroundColorProvider = self as? BackgroundColorProvider {
-            factory = { [unowned backgroundColorProvider] (_, _) in
-                return backgroundColorProvider.animation
-            }
-        }
-        else {
-           factory = nil
-        }
-        perform(coordinatedAnimations: factory)
-    }
-}
-
-private extension ActionableViewController {
-    @objc func handleNextTapped(_ sender: UIButton) {
-        (navigationController as? BoardingNavigationController)?.pushToNextViewController(animated: true)
-    }
-
-    @objc func handleSkipTapped(_ sender: UIButton) {
-        navigationController?.pushViewController(CompletedViewController(), animated: true)
     }
 }

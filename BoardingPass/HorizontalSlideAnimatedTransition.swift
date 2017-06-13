@@ -16,8 +16,6 @@ public class HorizontalSlideAnimatedTransiton: NSObject {
 
     let slideType: TransitionType
 
-    #if swift(>=3.0)
-
     /**
      Initializes a HorizontalSlideAnimatedTransiton for handling a pan gesture on a UINavigationController
 
@@ -32,23 +30,6 @@ public class HorizontalSlideAnimatedTransiton: NSObject {
         }
         super.init()
     }
-    #else
-
-    /**
-     Initializes a HorizontalSlideAnimatedTransiton for handling a pan gesture on a UINavigationController
-
-     - parameter navigationOperation: The the navigation operation bieng animated
-     */
-    public init(navigationOperation: UINavigationControllerOperation) {
-        switch  navigationOperation {
-        case .None, .Push:
-            slideType = .push
-        case .Pop:
-            slideType = .pop
-        }
-        super.init()
-    }
-    #endif
 
 }
 
@@ -56,8 +37,8 @@ extension HorizontalSlideAnimatedTransiton: UIViewControllerAnimatedTransitionin
 
     public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
 
-        guard let presented = transitionContext.viewController(forKey: UITransitionContextToViewControllerKey),
-            let presenting = transitionContext.viewController(forKey: UITransitionContextFromViewControllerKey) else {
+        guard let presented = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to),
+            let presenting = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from) else {
                 transitionContext.completeTransition(false)
                 return
         }

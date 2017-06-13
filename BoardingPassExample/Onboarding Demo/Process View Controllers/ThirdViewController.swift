@@ -16,24 +16,9 @@ class ThirdViewController: ActionableViewController {
         navigationItem.title = NSLocalizedString("Third", comment: "Third View controller title")
     }
 
-}
-
-extension ThirdViewController: BackgroundColorProvider {
-
-    var backgroundColor: UIColor {
-        return .lightGray
-    }
-
-    var currentProgress: Progress {
-        return Progress(completedUnitCount: 3, totalUnitCount: 4)
-    }
-
-}
-
-extension ThirdViewController: BoardingInformation {
-
-    var nextViewController: UIViewController? {
-        return CompletedViewController()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        animate(color: .lightGray)
     }
 
 }

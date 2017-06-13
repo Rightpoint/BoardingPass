@@ -11,8 +11,6 @@ import BoardingPass
 
 class CompletedViewController: UIViewController {
 
-    weak var onboardingDelegate: OnboardingViewControllerDelegate?
-
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.hidesBackButton = true
@@ -30,23 +28,8 @@ class CompletedViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let factory: AnimationFactory = { [unowned self]  (_, _) in
-            return self.animation
-        }
-        perform(coordinatedAnimations: factory)
+        animate(color: .white)
     }
-}
-
-extension CompletedViewController: BackgroundColorProvider {
-
-    var backgroundColor: UIColor {
-        return .white
-    }
-
-    var currentProgress: Progress {
-        return Progress(completedUnitCount: 4, totalUnitCount: 4)
-   }
-
 }
 
 private extension CompletedViewController {

@@ -16,16 +16,8 @@ class SecondViewController: ActionableViewController {
         navigationItem.title = NSLocalizedString("Second", comment: "Second View controller title")
     }
 
-}
-
-extension SecondViewController: BackgroundColorProvider {
-
-    var backgroundColor: UIColor {
-        return UIColor(white: 0.5, alpha: 1)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        animate(color: UIColor(white: 0.5, alpha: 1))
     }
-
-    var currentProgress: Progress {
-        return Progress(completedUnitCount: 2, totalUnitCount: 4)
-    }
-
 }
