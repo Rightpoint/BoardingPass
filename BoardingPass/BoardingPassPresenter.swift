@@ -33,7 +33,11 @@ private struct TransitionState {
 
 open class BoardingPassPresenter: NSObject {
 
-    fileprivate var transitionState = TransitionState()
+    fileprivate var transitionState = TransitionState() {
+        didSet {
+            print(transitionState)
+        }
+    }
     fileprivate var interactionController: UIPercentDrivenInteractiveTransition?
 
     /// An array of view controllers used to determine the next or previous view

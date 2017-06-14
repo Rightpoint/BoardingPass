@@ -8,13 +8,13 @@
 
 import UIKit
 
-public class HorizontalSlideAnimatedTransiton: NSObject {
+open class HorizontalSlideAnimatedTransiton: NSObject {
 
-    enum TransitionType {
+    public enum TransitionType {
         case push, pop
     }
 
-    let slideType: TransitionType
+    public let slideType: TransitionType
 
     /**
      Initializes a HorizontalSlideAnimatedTransiton for handling a pan gesture on a UINavigationController
@@ -35,7 +35,7 @@ public class HorizontalSlideAnimatedTransiton: NSObject {
 
 extension HorizontalSlideAnimatedTransiton: UIViewControllerAnimatedTransitioning {
 
-    public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+    open func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
 
         guard let presented = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to),
             let presenting = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from) else {
@@ -60,20 +60,18 @@ extension HorizontalSlideAnimatedTransiton: UIViewControllerAnimatedTransitionin
             presented.view.transform = CGAffineTransform.identity
         }
         let completion = { (completed: Bool) in
-            if completed {
-                presented.view.transform = CGAffineTransform.identity
-            }
-            else {
-                presenting.view.transform = CGAffineTransform.identity
-            }
+            presented.view.transform = CGAffineTransform.identity
+            presenting.view.transform = CGAffineTransform.identity
             transitionContext.completeTransition(completed)
         }
-        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0.0,
-                                   options: [.beginFromCurrentState],
-                                   animations: animations, completion: completion)
+        UIView.animate(
+            withDuration: transitionDuration(using: transitionContext),
+            delay: 0.0,
+            options: [.beginFromCurrentState],
+            animations: animations, completion: completion)
     }
 
-    public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+    open func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.4
     }
 }
