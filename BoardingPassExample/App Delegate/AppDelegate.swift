@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-extension AppDelegate: Actions {
+extension AppDelegate: NavigationActionResponder {
     func handleNextTapped(_ sender: UIResponder) {
         presenter?.pushToNextViewController(animated: true)
     }

@@ -41,8 +41,7 @@ open class BoardingPassPresenter: NSObject {
     fileprivate var interactionController: UIPercentDrivenInteractiveTransition?
 
     /// An array of view controllers used to determine the next or previous view
-    /// controller to present in the series. These are ignored if the top view
-    /// controller conforms to `BoardingInformation`
+    /// controller to present in the series.
     open var viewControllersToPresent: [UIViewController]
 
     /// The Navigation Controller that this presenter is acting on behalf of.

@@ -24,6 +24,7 @@
 		72BE8D8E1D3FBCDE005720FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72BE8D8D1D3FBCDE005720FB /* Assets.xcassets */; };
 		72BE8D911D3FBCDE005720FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 72BE8D8F1D3FBCDE005720FB /* LaunchScreen.storyboard */; };
 		72F163451D4910D1007D983B /* ActionableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F163441D4910D1007D983B /* ActionableViewController.swift */; };
+		86833AB41EF0C51400A3C883 /* UIKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86833AB31EF0C51400A3C883 /* UIKit+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 		72BE8D901D3FBCDE005720FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		72BE8D921D3FBCDE005720FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		72F163441D4910D1007D983B /* ActionableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionableViewController.swift; sourceTree = "<group>"; };
+		86833AB31EF0C51400A3C883 /* UIKit+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,9 +152,9 @@
 			isa = PBXGroup;
 			children = (
 				72BE8D981D3FBD0C005720FB /* Assets */,
-				7264CA2D1D3FEB2A00033FC4 /* UIViewController+TransitionAnimation.swift */,
 				7264CA2B1D3FC69800033FC4 /* BoardingPassPresenter.swift */,
 				7264CA341D4001BD00033FC4 /* HorizontalSlideAnimatedTransition.swift */,
+				7264CA2D1D3FEB2A00033FC4 /* UIViewController+TransitionAnimation.swift */,
 			);
 			path = BoardingPass;
 			sourceTree = "<group>";
@@ -217,6 +219,7 @@
 				7264CA311D3FEC4000033FC4 /* Completed View Controller */,
 				7264CA301D3FEC2A00033FC4 /* Process View Controllers */,
 				72BE8D881D3FBCDE005720FB /* OnboardingWrapperViewController.swift */,
+				86833AB31EF0C51400A3C883 /* UIKit+Extensions.swift */,
 			);
 			path = "Onboarding Demo";
 			sourceTree = "<group>";
@@ -405,6 +408,7 @@
 			files = (
 				72F163451D4910D1007D983B /* ActionableViewController.swift in Sources */,
 				7264CA331D3FEC4C00033FC4 /* CompletedViewController.swift in Sources */,
+				86833AB41EF0C51400A3C883 /* UIKit+Extensions.swift in Sources */,
 				7264CA231D3FC4B300033FC4 /* SecondViewController.swift in Sources */,
 				7264CA211D3FC4AB00033FC4 /* FirstViewController.swift in Sources */,
 				7264CA251D3FC4B900033FC4 /* ThirdViewController.swift in Sources */,

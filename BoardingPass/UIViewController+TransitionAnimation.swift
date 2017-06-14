@@ -1,5 +1,5 @@
 //
-//  BoardingInformation.swift
+//  UIViewController+TransitionAnimation.swift
 //  BoardingPass
 //
 //  Created by Michael Skiba on 7/20/16.
