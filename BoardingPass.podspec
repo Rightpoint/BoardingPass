@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'BoardingPass'
-  s.version          = '0.2.1'
+  s.version          = '0.3'
   s.summary          = 'A navigation controller interactive pan to push and pop.'
 
   s.description      = <<-DESC
